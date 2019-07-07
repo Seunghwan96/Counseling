@@ -1,0 +1,25 @@
+<!-- accounts/templates/login.html -->
+
+{% extends 'base.html' %}
+{% block contents %}
+<h1>Login</h1>
+<form method="POST" action="{% url 'login'%}">
+	{% csrf_token %}
+    아이디:
+    <br>
+    <input name="id" type="text" value="">
+    <br>
+    비밀번호:
+    <br>
+    <input name="password" type="password" value="">
+    <br>
+    <br>
+    <input class="btn btn-primary" type="submit" value="Login">
+</form>
+{% endblock %}
+
+{% if error %}
+{{ error }}
+<br>
+<br>
+{% endif %}
