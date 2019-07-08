@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Post, Profile #Blog모델을 가져와서 쓸꺼니깐 위에 적어줌
+from .models import Post, Profile, Comment #Blog모델을 가져와서 쓸꺼니깐 위에 적어줌
 from django.core.paginator import Paginator
 # Create your views here.
  
@@ -19,14 +19,18 @@ from django.core.paginator import Paginator
     # posts = paginator.get_page(now_page)
     
 def main(request):
-    #if user
     posts = Post.objects.all()
     context={
         "posts":posts
         }
     return render(request, 'main.html',context)
-        
 
+def profile(request, user):
+    profile = Profile.objects.get(user = request.user)
+    context={
+        "profile":profile
+        }   
+    return render(request, 'profile.html', context)
 
 def write(request): #GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함
     if request.method == "GET":
@@ -38,7 +42,6 @@ def write(request): #GET 은 검색을 위함, POST는 데이터를 전송하고
         post.title=request.POST['title']
         post.content=request.POST['content']
         post.category=request.POST['category']
-        post.npclass=request.POST['npclass']
         try:
             post.image = request.FILES['image']
         except:
@@ -47,3 +50,36 @@ def write(request): #GET 은 검색을 위함, POST는 데이터를 전송하고
         post.save()
 
         return redirect('main')
+
+def read(request,post_id):
+    post = Post.objects.get(id=post_id)
+    comment = Comment.objects.filter(post = post_id)
+    context = {
+        "post":post,
+        "comment":comment,
+    }
+    return render(request,'read.html',context)
+
+def delete(request,post_id):
+    post = Post.objects.get(id = post_id)
+    post.delete()
+    return redirect(main)
+
+
+def c_create(request,post_id):
+    if request.method == "POST":
+        comment = Comment()
+        comment.user = request.user
+        comment.post = Post.objects.get(id = post_id)
+        comment.content = request.POST['comment']
+        anonymous = request.POST.get('anonymous', False)
+        if anonymous == "y":
+            comment.anonymous = True
+        comment.save()
+        return redirect(read,comment.post.id)
+
+def c_delete(request,comment_id):
+    comment = Comment.objects.get(id = comment_id)
+    post_id = comment.post_id
+    comment.delete()
+    return redirect(read,post_id)

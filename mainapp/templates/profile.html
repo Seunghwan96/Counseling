@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block contents %}
+
+<h1>프로필화면</h1>
+
+<div class="card mb-3 shadow" style="width: 100%;">
+    <div class="card-body">
+        <h4 class="card-title">이름 : {{profile.user}}</h4>
+        <h4 class="card-title">사진 : {{profile.image}}</h4>
+        <h4 class="card-title">구독자수 : {{profile.subscribe_person}}</h4>
+        <h4 class="card-title">공감수 : {{profile.like_num}}</h4>
+        <h4 class="card-title">비공감수 : {{profile.dislike_num}}</h4>
+    </div>
+</div>
+{%endblock%}

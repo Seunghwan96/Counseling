@@ -23,7 +23,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mainapp.views.main, name='main'),
     path('write/', mainapp.views.write, name='write'),
+    path('read/<int:post_id>',mainapp.views.read,name='read'),
+    path('delete/<int:post_id>',mainapp.views.delete,name='delete'),
     path('signup/', accounts.views.signup, name='signup'),
     path('login/', accounts.views.login,name='login'),
     path('logout/', accounts.views.logout, name='logout'),
+    path('profile/<str:user>',mainapp.views.profile, name='profile'),
+    path('c_create/<int:post_id>',mainapp.views.c_create, name="c_create"),
+    path('c_delete/<int:comment_id>',mainapp.views.c_delete, name='c_delete'),
 ]

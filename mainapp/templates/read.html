@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block contents %}
+
+
+
+{% if user.is_authenticated %}
+<p>환영합니다 {{user.username}}님</p>
+<a href="{% url 'profile' user.username %}">프로필화면</a>
+<form action="{%url 'logout'%}" method="POST">
+    {%csrf_token%}
+    <input type="submit" value="로그아웃">
+</form>
+{% else %}
+<p>로그인 해주세요</p>
+<a href="{%url 'signup'%}">회원가입</a>
+<a href="{%url 'login'%}">로그인</a>
+{% endif %}
+
+<div class="card mb-3 shadow" style="width: 100%;">
+    <div class="card-body">
+        <h4 class="card-title">카테고리 : {{post.category}}</h4>
+        <h4 class="card-title">제목 : {{post.title}}</h4>
+        <h4 class="card-title">내용 : {{post.content}}</h4>
+        <h4 class="card-title">사진 : {{post.image}}</h4>
+        <h4 class="card-title">공감수 : {{post.like_num}}</h4>
+        <h4 class="card-title">비공감수 : {{post.dislike_num}}</h4>
+        <h4 class="card-title">총점 : {{post.like_result}}</h4>
+        <h4 class="card-title">글쓴시간 : {{post.created_at}}</h4>
+        <h4 class="card-title">수정시간 : {{post.updated_at}}</h4>
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+<form action="{%url 'c_create' post.id%}" method="POST">
+    {%csrf_token%}
+    <div class="input-group mt-5 mb-5">
+        <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" name="anonymous" value="y">
+                <span style="font-size: 0.7em;">익명</span>
+            </div>
+        </div>
+        <div class="input-group-append">
+            <button class="btn btn-danger"><i class="fas fa-pencil-alt"></i></button>
+        </div>
+    </div>
+</form>
+{% endif %}
+
+<!-- 아래 이후 댓글 -->
+<div>
+    <ul class="list-group mb-2">
+        {%for c in comment%}
+        <li class="list-group-item list-group-item-light">
+            {%if c.anonymous == True%}
+            <span style="font-weight: bold;font-size:0.7em;">익명</span>
+            {%else%}
+            <span style="font-weight: bold;font-size:0.7em;">{{c.user}}</span>
+            {%endif%}
+            <br>
+            {{c.content}}
+
+            {%if request.user == c.user or request.user.is_staff %}
+            <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
+            <form action="{%url 'c_delete' c.id%}">
+                <input type="submit" value="댓글삭제"></input>
+            </form>
+            {%endif%}
+            
+        </li>
+        {%endfor%}
+    </ul>
+</div>
+
+<button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'main'%}">글 목록</a></button>
+{%if request.user == post.user or request.user.is_staff %}
+<!-- 글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
+<button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'delete' post.id%}">삭제하기</a></button>
+{%endif%}
+{% endblock %}
