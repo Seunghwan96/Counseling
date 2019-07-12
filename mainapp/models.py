@@ -18,14 +18,14 @@ class Post(models.Model):
     blind = models.BooleanField(default = False) # 게시글 블라인드 여부
     created_at = models.DateField(auto_now_add = True)
     updated_at = models.DateField(auto_now=True)
+    Post_list = models.TextField()
 
     def setLike_num(self): # 공감 버튼 누를 시 호출
-        self.like_num += 1
-        setLike_result()
+        self.like_num = self.like_num + 1
+        return self.like_num
 
     def setDislike_num(self): # 비공감 버튼 누를 시 호출
         self.dislike_num += 1
-        setLike_result()
 
     def setLike_result(self): # 총점 계산기 : 공감 및 비공 누를 시 호출
         self.like_result = (self.like_num - self.dislike_num)
@@ -53,6 +53,8 @@ class Comment(models.Model):
     dislike_num = models.IntegerField(default=0) #   비공감 수
     report_num = models.IntegerField(default=0) #    신고 횟수
     blind = models.BooleanField(default = False) # 게시글 블라인드 여부
+    Comment_list= models.TextField()
+
     def setLike_num(self): # 공감 버튼 누를 시 호출
         self.like_num += 1
         setLike_result()

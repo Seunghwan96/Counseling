@@ -83,3 +83,40 @@ def c_delete(request,comment_id):
     post_id = comment.post_id
     comment.delete()
     return redirect(read,post_id)
+
+def setPLike_num(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.like_num= post.like_num+1
+    post.save()
+    return redirect(read, post.id)
+
+def setPdisLike_num(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.dislike_num= post.dislike_num+1
+    post.save()
+    return redirect(read, post.id)
+
+
+def setPLike(request, post_id):
+    username = Profile.objects.get(user = request.user)
+    post = Post.objects.get(id=post_id)
+    tempstr = str(username.user) + " "
+    if tempstr in post.Post_list:
+        pass
+    else:
+        post.like_num= post.like_num+1
+        post.Post_list = post.Post_list + tempstr
+        post.save()
+    return redirect(read, post.id)
+
+def setPdisLike(request, post_id):
+    username = Profile.objects.get(user = request.user)
+    post = Post.objects.get(id=post_id)
+    tempstr = str(username.user) + " "
+    if tempstr in post.Post_list:
+        pass
+    else:
+        post.dislike_num= post.dislike_num+1
+        post.Post_list = post.Post_list + tempstr
+        post.save()
+    return redirect(read, post.id)

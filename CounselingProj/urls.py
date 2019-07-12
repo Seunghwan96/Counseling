@@ -31,4 +31,8 @@ urlpatterns = [
     path('profile/<str:user>',mainapp.views.profile, name='profile'),
     path('c_create/<int:post_id>',mainapp.views.c_create, name="c_create"),
     path('c_delete/<int:comment_id>',mainapp.views.c_delete, name='c_delete'),
+    path('setPLike_num/<int:post_id>',mainapp.views.setPLike_num, name='setPLike_num'),
+    path('setPdisLike_num/<int:post_id>',mainapp.views.setPdisLike_num, name='setPdisLike_num'),
+    path('setPLike/<int:post_id>',mainapp.views.setPLike, name='setPLike'),
+    path('setPdisLike/<int:post_id>',mainapp.views.setPdisLike, name='setPdisLike'),
 ]
