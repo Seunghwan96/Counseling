@@ -4,6 +4,12 @@
 <form action="{% url 'write' %}" method="POST" enctype="multipart/form-data">
     <!--GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함-->
     {%csrf_token%}
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+            <input type="checkbox" name="anonymous" value="1">
+            <span style="font-size: 0.7em;">익명</span>
+        </div>
+    </div>
     <select name="category" id="">
         <option value="진로">진로</option>
         <option value="취업">취업</option>

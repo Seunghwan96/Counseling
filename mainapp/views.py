@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 from .models import Post, Profile, Comment #Blog모델을 가져와서 쓸꺼니깐 위에 적어줌
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
-
+from itertools import chain
 # Create your views here.
  
     
 def main(request):
     posts = Post.objects.all()
+    #posts = chain(posts, (Post.objects.order_by('-created_at').all()))
     context={
         "posts":posts 
         }
@@ -39,6 +40,9 @@ def write(request): #GET 은 검색을 위함, POST는 데이터를 전송하고
         post.title=request.POST['title']
         post.content=request.POST['content']
         post.category=request.POST['category']
+        anonymous = request.POST.get('anonymous',False)  
+        if anonymous == "1":
+            post.anonymous = True
         try:
             post.image = request.FILES['image']
         except:
@@ -76,6 +80,23 @@ def update(request,post_id):
         post.save()
         
         return redirect(read, post_id)
+
+def update_profile(request,user):
+    if request.method =="GET":
+        profile = Profile.objects.get(user = request.user)
+        context={
+            "profile":profile
+            }
+        return render(request, "update_profile.html", context)
+    elif request.method=="POST":
+        profile = Profile.objects.get(user = request.user)
+        profile.phone =request.POST['phone']
+        try:
+            profile.image = request.FILES['image']
+        except:
+            pass
+        profile.save()
+        return redirect(main)
 
 def report(request, post_id):
     username = Profile.objects.get(user = request.user)

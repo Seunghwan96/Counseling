@@ -6,17 +6,18 @@
 {% if user.is_authenticated %}
 <p>환영합니다 {{user.username}}님</p>
 <a href="{% url 'profile' user.username %}">프로필화면</a>
+<img src="{{user}}" alt="">
 <form action="{%url 'logout'%}" method="POST">
     {%csrf_token%}
     <input type="submit" value="로그아웃">
-</form>
+</form> 
 <br>
-
 {% else %}
 <p>로그인 해주세요</p>
 <a href="{%url 'signup'%}">회원가입</a>
 <a href="{%url 'login'%}">로그인</a>
 {% endif %}
+
 <button type="button" class="btn btn-dark"><a href="{% url 'write' %}" id="w_button">글쓰기 버튼</a></button>
 {%for p in posts%}
     {% if p.blind == True %}

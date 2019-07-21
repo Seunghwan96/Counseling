@@ -25,7 +25,9 @@ urlpatterns = [
     path('', mainapp.views.main, name='main'), # 메인화면
     path('write/', mainapp.views.write, name='write'), #게시글 쓰기
     path('read/<int:post_id>',mainapp.views.read,name='read'), # 게시글 읽기
-    path('update/<int:post_id>',mainapp.views.update, name='update'),
+    path('update/<int:post_id>',mainapp.views.update, name='update'), #게시글 수정
+    path('update_profile/<str:user>', mainapp.views.update_profile, name ='update_profile'), #프로필 수정
+
     path('delete/<int:post_id>',mainapp.views.delete,name='delete'), #게시글 삭제
     path('signup/', accounts.views.signup, name='signup'), #회원가입
     path('login/', accounts.views.login,name='login'), #로그인

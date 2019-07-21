@@ -18,6 +18,14 @@
         <h4 class="card-title">구독자수 : {{profile.subscribe_person}}</h4>
         <h4 class="card-title">공감수 : {{profile.like_num}}</h4>
         <h4 class="card-title">비공감수 : {{profile.dislike_num}}</h4>
+
+        {%if request.user == profile.user or request.user.is_staff %}
+        <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
+        <form action="{%url 'update_profile' user.username%}">
+            <input type="submit" value="수정하기"></input>
+        </form>
+        {%endif%}
+
     </div>
 </div>
 {%endblock%}
