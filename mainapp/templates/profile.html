@@ -5,8 +5,16 @@
 
 <div class="card mb-3 shadow" style="width: 100%;">
     <div class="card-body">
-        <h4 class="card-title">이름 : {{profile.user}}</h4>
-        <h4 class="card-title">사진 : {{profile.image}}</h4>
+        <h4 class="card-title">아이디 : {{profile.user}}</h4>
+        <h4 class="card-title">이름 : {{profile.name}}</h4>
+        <h4 class="card-title">성별 : {{profile.sex}}</h4>
+        <h4 class="card-title">생년월일 : {{profile.birth}}</h4>
+        <h4 class="card-title">전화번호 : {{profile.phone}}</h4>
+        <h4 class="card-title">사진 : 
+        {% if profile.image %}
+            <img src="{{profile.image.url}}" alt="">
+        {%endif%}
+        </h4>
         <h4 class="card-title">구독자수 : {{profile.subscribe_person}}</h4>
         <h4 class="card-title">공감수 : {{profile.like_num}}</h4>
         <h4 class="card-title">비공감수 : {{profile.dislike_num}}</h4>

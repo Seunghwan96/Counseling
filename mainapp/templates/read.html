@@ -18,10 +18,17 @@
 
 <div class="card mb-3 shadow" style="width: 100%;">
     <div class="card-body">
+        <form action="{% url 'report' post.id%}">
+            {{post.report_num}}
+            <button type="submit" class="btn btn-primary btn-lg">신고</button>
+        </form>
+        <h4 class="card-title">글쓴사람 : <a href="{% url 'p_profile' post.id post.user %}">{{post.user}}</h4></a>
         <h4 class="card-title">카테고리 : {{post.category}}</h4>
         <h4 class="card-title">제목 : {{post.title}}</h4>
         <h4 class="card-title">내용 : {{post.content}}</h4>
-        <h4 class="card-title">사진 : {{post.image}}</h4>
+        {%if post.image %}
+            <h4 class="card-title">사진 : <img src="{{post.image.url}}" alt=""></h4>
+        {%endif%}
         <h4 class="card-title">공감수 : {{post.like_num}}</h4>
         <h4 class="card-title">비공감수 : {{post.dislike_num}}</h4>
         <h4 class="card-title">총점 : {{post.like_result}}</h4>
@@ -30,11 +37,19 @@
         <form action="{%url 'setPLike' post.id%}">
             <button type="submit" class="btn btn-primary btn-lg">공감한다.</button>
         </form>
-        공감수 :  {{post.like_num}}
         <form action="{%url 'setPdisLike' post.id%}">
             <button type="submit" class="btn btn-primary btn-lg">비공감한다.</button>
         </form>
-        비공감수 :  {{post.dislike_num}}
+        
+        {%if request.user == post.user or request.user.is_staff %}
+        <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
+        <form action="{%url 'update' post.id%}">
+            <input type="submit" value="수정하기"></input>
+        </form>
+        <form action="{%url 'delete' post.id%}">
+            <input type="submit" value="삭제하기"></input>
+        </form>
+        {%endif%}
     </div>
 </div>
 
@@ -61,13 +76,22 @@
     <ul class="list-group mb-2">
         {%for c in comment%}
         <li class="list-group-item list-group-item-light">
-            {%if c.anonymous == True%}
+            <!-- {%if c.anonymous == True%}
             <span style="font-weight: bold;font-size:0.7em;">익명</span>
             {%else%}
             <span style="font-weight: bold;font-size:0.7em;">{{c.user}}</span>
-            {%endif%}
+            {%endif%} -->
             <br>
             {{c.content}}
+
+            <form action="{%url 'setCLike' post.id c.id%}">
+                <button type="submit" class="btn btn-primary btn-sm">공감한다.</button>
+            </form>
+            공감수 :  {{c.like_num}}
+            <form action="{%url 'setCdisLike' post.id c.id%}">
+                <button type="submit" class="btn btn-primary btn-sm">비공감한다.</button>
+            </form>
+            비공감수 :  {{c.dislike_num}}
 
             {%if request.user == c.user or request.user.is_staff %}
             <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
@@ -82,8 +106,5 @@
 </div>
 
 <button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'main'%}">글 목록</a></button>
-{%if request.user == post.user or request.user.is_staff %}
-<!-- 글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
-<button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'delete' post.id%}">삭제하기</a></button>
-{%endif%}
+
 {% endblock %}

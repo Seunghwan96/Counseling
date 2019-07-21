@@ -4,18 +4,22 @@ from django.contrib import auth
 #
 # Create your views here.
 
- 
-            # user.profile.nickname=request.POST['nickname']
-            # user.profile.region = request.POST['region']
 def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
-            user = User.objects.create_user(
-                request.POST['id'], password=request.POST['password1'])
+            user = User.objects.create_user(request.POST['id'], password=request.POST['password1'])
+            user.profile.name=request.POST['name']
+            user.profile.sex=request.POST['sex']
+            user.profile.birth=request.POST['birth']
+            user.profile.phone=request.POST['phone']
+            try:
+                user.profile.image=request.FILES['image']
+            except:
+                pass
             auth.login(request, user)
             return redirect('main')
     return render(request, 'signup.html')
-
+ 
 
 
 def login(request):

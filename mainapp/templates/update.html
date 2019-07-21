@@ -1,0 +1,28 @@
+{%extends 'base.html' %}
+{%block contents%}
+<h1>글수정 페이지</h1><!--GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함-->
+
+<form action="{% url 'update' post.id%}" method="POST" enctype="multipart/form-data">
+    <!--GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함-->
+    {%csrf_token%}
+    <select name="category" id="">
+        <option value="진로">진로</option>
+        <option value="취업">취업</option>
+        <option value="연애">연애</option>
+        <option value="친구">친구</option>
+        <option value="외모">외모</option>
+        <option value="19">19</option>
+        <option value="기타">기타</option>
+    </select>
+    <p>제목</p>
+    <input type="text" name="title" value="{{post.title}}">
+    <p>내용</p>
+    <textarea name="content" id="" cols="30" rows="10" value="{{post.content}}">{{post.content}}</textarea>
+    <br>
+    <input type="file" name="image" value="{{post.image}}">
+    <br>
+    <input type="submit" value="수정하기">
+    <br>
+</form>
+<a href="{% url 'main'%}">Home</a>
+{%endblock%}

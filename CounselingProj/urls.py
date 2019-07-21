@@ -16,23 +16,30 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
+from django.conf.urls.static import static
 import mainapp.views
 import accounts.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', mainapp.views.main, name='main'),
-    path('write/', mainapp.views.write, name='write'),
-    path('read/<int:post_id>',mainapp.views.read,name='read'),
-    path('delete/<int:post_id>',mainapp.views.delete,name='delete'),
-    path('signup/', accounts.views.signup, name='signup'),
-    path('login/', accounts.views.login,name='login'),
-    path('logout/', accounts.views.logout, name='logout'),
-    path('profile/<str:user>',mainapp.views.profile, name='profile'),
-    path('c_create/<int:post_id>',mainapp.views.c_create, name="c_create"),
-    path('c_delete/<int:comment_id>',mainapp.views.c_delete, name='c_delete'),
-    path('setPLike_num/<int:post_id>',mainapp.views.setPLike_num, name='setPLike_num'),
-    path('setPdisLike_num/<int:post_id>',mainapp.views.setPdisLike_num, name='setPdisLike_num'),
-    path('setPLike/<int:post_id>',mainapp.views.setPLike, name='setPLike'),
-    path('setPdisLike/<int:post_id>',mainapp.views.setPdisLike, name='setPdisLike'),
-]
+    path('', mainapp.views.main, name='main'), # 메인화면
+    path('write/', mainapp.views.write, name='write'), #게시글 쓰기
+    path('read/<int:post_id>',mainapp.views.read,name='read'), # 게시글 읽기
+    path('update/<int:post_id>',mainapp.views.update, name='update'),
+    path('delete/<int:post_id>',mainapp.views.delete,name='delete'), #게시글 삭제
+    path('signup/', accounts.views.signup, name='signup'), #회원가입
+    path('login/', accounts.views.login,name='login'), #로그인
+    path('logout/', accounts.views.logout, name='logout'), #로그아웃
+    path('profile/<str:user>',mainapp.views.profile, name='profile'), #메인에서 프로필화면 가기
+    path('p_profile/<int:post_id>/<str:user>',mainapp.views.p_profile, name='p_profile'),
+    path('c_create/<int:post_id>',mainapp.views.c_create, name="c_create"), #댓글 쓰기
+    path('c_delete/<int:comment_id>',mainapp.views.c_delete, name='c_delete'), #댓글 삭제
+
+    path('setPLike/<int:post_id>',mainapp.views.setPLike, name='setPLike'), # 게시글 공감
+    path('setPdisLike/<int:post_id>',mainapp.views.setPdisLike, name='setPdisLike'), # 게시글 비공감
+
+    path('setCLike/<int:post_id>/<int:comment_id>',mainapp.views.setCLike, name='setCLike'), # 댓글 공감
+    path('setCdisLike/<int:post_id>/<int:comment_id>',mainapp.views.setCdisLike, name='setCdisLike'), # 댓글 비공감
+
+    path('report/<int:post_id>', mainapp.views.report,name='report'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
