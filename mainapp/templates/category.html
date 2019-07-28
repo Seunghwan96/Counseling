@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% block contents %}
-
-
+<h2 style="color:white">{{name}} 게시판</h2>
 <button type="button" class="btn btn-dark"><a href="{% url 'write' %}" id="w_button">글쓰기 버튼</a></button>
-{%for p in posts%}
+{%for p in category%}
     {% if p.blind == True %}
     {% else %}
     <div class="card mb-3 shadow" style="width: 100%;">

@@ -30,6 +30,16 @@ def p_profile(request, post_id, user):
         }   
     return render(request, 'profile.html', context)
 
+def c_profile(request, comment_id, user):
+    comment = Comment.objects.get(id=comment_id)
+    user = User.objects.get(comment = comment)
+    profile = Profile.objects.get(user= user)
+    context={
+        "profile":profile
+        }
+    return render(request, 'profile.html', context)
+
+    
 def write(request): #GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함
     if request.method == "GET":
         return render(request, 'write.html')
@@ -117,6 +127,16 @@ def report(request, post_id):
         post.report_num+=1
         post.save()
     return redirect(main)
+
+def category(request, category):
+    posts = Post.objects.all()
+    name = str(category)
+    category = posts.filter(category__icontains=category)
+    context={
+        "category":category,
+        "name":name,
+        }
+    return render(request, 'category.html', context)
 
 
 ################################################################

@@ -33,7 +33,8 @@ urlpatterns = [
     path('login/', accounts.views.login,name='login'), #로그인
     path('logout/', accounts.views.logout, name='logout'), #로그아웃
     path('profile/<str:user>',mainapp.views.profile, name='profile'), #메인에서 프로필화면 가기
-    path('p_profile/<int:post_id>/<str:user>',mainapp.views.p_profile, name='p_profile'),
+    path('p_profile/<int:post_id>/<str:user>',mainapp.views.p_profile, name='p_profile'), #게시글에서 프로필화면 가기
+    path('c_profile/<int:comment_id>/<str:user>', mainapp.views.c_profile, name='c_profile'), #댓글에서 프로필화면 가기 
     path('c_create/<int:post_id>',mainapp.views.c_create, name="c_create"), #댓글 쓰기
     path('c_delete/<int:comment_id>',mainapp.views.c_delete, name='c_delete'), #댓글 삭제
 
@@ -43,5 +44,6 @@ urlpatterns = [
     path('setCLike/<int:post_id>/<int:comment_id>',mainapp.views.setCLike, name='setCLike'), # 댓글 공감
     path('setCdisLike/<int:post_id>/<int:comment_id>',mainapp.views.setCdisLike, name='setCdisLike'), # 댓글 비공감
 
-    path('report/<int:post_id>', mainapp.views.report,name='report'),
+    path('report/<int:post_id>', mainapp.views.report,name='report'), #신고기능
+    path('category/<str:category>', mainapp.views.category, name='category'), #카테고리 검색
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

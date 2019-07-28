@@ -1,48 +1,51 @@
 <!-- accounts/templates/signup.html -->
-     
+
 {% extends 'base.html' %}
-    
+
 {% block contents %}
 
-<form action="{%url 'signup'%}" method="post" enctype="multipart/form-data">
-    {%csrf_token%}
-    
-    아이디:
-    <br>
-    <input name="id" type="text" value="">
-    <br>
-    비밀번호:
-    <br>
-    <input name="password1" type="password" value="">
-    <br>
-    비밀번호 확인:
-    <br>
-    <input name="password2" type="password" value="">
-    <br>
-    이름:
-    <br>
-    <input name="name" type="text" value="">
-    <br>
-    성별:
-    <br>
-    <select name="sex" id="">
-        <option value="남성">남성</option>
-        <option value="여성">여성</option>
-    </select>
-    <br>
-    생년월일:
-    <br>
-    <input name="birth" type="text" value="">
-    <br>
-    전화번호:
-    <br>
-    <input name="phone" type="text" value="">
-    <br>
-    프로필사진:
-    <br>
-    <input type="file" name="image"><br>
-    <input class="btn btn-primary" type="submit" value="Sign Up!">
-    
-</form>
+<div style="color:white">
+    <form action="{%url 'signup'%}" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+
+        아이디:
+        <br>
+        <input name="id" type="text" value="">
+        <br>
+        비밀번호:
+        <br>
+        <input name="password1" type="password" value="">
+        <br>
+        비밀번호 확인:
+        <br>
+        <input name="password2" type="password" value="">
+        <br>
+        별명:
+        <br>
+        <input name="nickname" type="text" value="">
+        <br>
+        이름:
+        <br>
+        <input name="name" type="text" value="">
+        <br>
+        성별:
+        <br>
+        <select name="sex" id="">
+            <option value="남성">남성</option>
+            <option value="여성">여성</option>
+        </select>
+        <br>
+        생년월일:
+        <br>
+        <input name="birth" type="text" value="">
+        <br>
+        전화번호:
+        <br>
+        <input name="phone" type="text" value="">
+        <br>
+        <input class="btn btn-primary" type="submit" value="Sign Up!">
+
+    </form>
+</div>
 
 {% endblock %}

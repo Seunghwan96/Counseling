@@ -11,7 +11,6 @@ class Post(models.Model):
     category = models.CharField(max_length=50, blank=True) #카테고리
     image = models.ImageField(upload_to='images/',null=True, blank=True) #게시글사진첨부
     like_num = models.IntegerField(default=0) #  공감 수
-    #like_num = models.ManyToManyField('user') #  공감 수
     dislike_num = models.IntegerField(default=0) #   비공감 수
     like_result = models.IntegerField(default=0) #   공감-비공감 = 총점
     report_num = models.IntegerField(default=0) #    신고 횟수
@@ -24,6 +23,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def summary(self):
+        return self.content[:20]
 
 
 class Comment(models.Model):
@@ -45,6 +47,7 @@ class Comment(models.Model):
 class Profile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.CASCADE) #유저랑 1:1관계
     name=models.CharField(max_length=10) #이름
+    nickname=models.CharField(max_length=10) #닉네임
     sex = models.CharField(max_length=5) #성별
     birth = models.CharField(max_length=10) #생년월일
     phone = models.CharField(max_length=15) # 번호

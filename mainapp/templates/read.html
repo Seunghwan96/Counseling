@@ -2,20 +2,6 @@
 {% block contents %}
 
 
-
-{% if user.is_authenticated %}
-<p>환영합니다 {{user.username}}님</p>
-<a href="{% url 'profile' user.username %}">프로필화면</a>
-<form action="{%url 'logout'%}" method="POST">
-    {%csrf_token%}
-    <input type="submit" value="로그아웃">
-</form>
-{% else %}
-<p>로그인 해주세요</p>
-<a href="{%url 'signup'%}">회원가입</a>
-<a href="{%url 'login'%}">로그인</a>
-{% endif %}
-
 <div class="card mb-3 shadow" style="width: 100%;">
     <div class="card-body">
         {% if user.is_authenticated %}
@@ -29,6 +15,7 @@
             <h4 class="card-title">글쓴사람 : 익명</h4>
         {%else%}
         <h4 class="card-title">글쓴사람 : <a href="{% url 'p_profile' post.id post.user %}">{{post.user}}</h4></a>
+        <h4 class="card-title">별명 : <a href="{% url 'p_profile' post.id post.user %}">{{post.user.profile.nickname}}</a></h4>
         {%endif%}
         <h4 class="card-title">카테고리 : {{post.category}}</h4>
         <h4 class="card-title">제목 : {{post.title}}</h4>
@@ -79,7 +66,8 @@
     <ul class="list-group mb-2">
         {%for c in comment%}
         <li class="list-group-item list-group-item-light">
-            <span style="font-weight: bold;font-size:0.7em;">{{c.user}}</span>
+            <span style="font-weight: bold;font-size:0.7em;"><a href="{% url 'c_profile' c.id c.user %}">{{c.user}}</a></span>
+            <!-- 댓글 쓴사람 -->
             <br>
             {{c.content}}
             {% if user.is_authenticated %}
