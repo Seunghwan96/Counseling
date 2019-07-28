@@ -66,7 +66,7 @@
     <ul class="list-group mb-2">
         {%for c in comment%}
         <li class="list-group-item list-group-item-light">
-            <span style="font-weight: bold;font-size:0.7em;"><a href="{% url 'c_profile' c.id c.user %}">{{c.user}}</a></span>
+            <span style="font-weight: bold;font-size:0.7em;"><a href="{% url 'c_profile' c.id c.user %}">{{c.user.profile.nickname}}</a></span>
             <!-- 댓글 쓴사람 -->
             <br>
             {{c.content}}
