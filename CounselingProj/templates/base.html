@@ -70,22 +70,7 @@
         </div>
     </nav>
 
-    <div style="color:white">
-        {% if user.is_authenticated %}
-        <p>환영합니다 {{user.profile.nickname}}님</p>
-        <a href="{% url 'profile' user.username %}">프로필화면</a>
-        <img src="{{user}}" alt="">
-        <form action="{%url 'logout'%}" method="POST">
-            {%csrf_token%}
-            <input type="submit" value="로그아웃">
-        </form>
-        <br>
-        {% else %}
-        <p>로그인 해주세요</p>
-        <a href="{%url 'signup'%}">회원가입</a>
-        <a href="{%url 'login'%}">로그인</a>
-        {% endif %}
-    </div>
+    
     <!-- 이 아래에 컨텐츠가 올 예정이라고 선언해야함-->
     {% block contents %}
 

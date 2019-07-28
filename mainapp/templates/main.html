@@ -1,20 +1,117 @@
 {% extends 'base.html' %}
 {% block contents %}
+{% load staticfiles %}
+<style>
+    .back {
+        height: 90vh;
+        background-image:url("{% static 'bgimage.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
+    .ico-set {
+        color: gray;
+    }
+
+    .name {
+        color: white;
+    }
+
+    .widget {
+        color: white;
+        float: none;
+    }
+
+    table.darkTable {
+        font-family: "Arial Black", Gadget, sans-serif;
+        border: 2px solid #000000;
+        width: 100%;
+        height: 200px;
+        text-align: left;
+        border-collapse: collapse;
+    }
+
+    table.darkTable td,
+    table.darkTable th {
+        border: 1px solid #4A4A4A;
+        padding: 3px 2px;
+    }
+
+    table.darkTable tbody td {
+        font-size: 13px;
+        color: gray;
+
+    }
+
+    table.darkTable tr:nth-child(even) {}
+
+    table.darkTable thead {
+        background: #000000;
+        border-bottom: 3px solid #000000;
+    }
+
+    table.darkTable thead th {
+        font-size: 15px;
+        font-weight: bold;
+        color: #E6E6E6;
+        text-align: center;
+        border-left: 2px solid #4A4A4A;
+    }
+
+    table.darkTable thead th:first-child {
+        border-left: none;
+    }
+
+    table.darkTable tfoot {
+        font-size: 12px;
+        font-weight: bold;
+        color: #E6E6E6;
+        background: #000000;
+        background: -moz-linear-gradient(top, #404040 0%, #191919 66%, #000000 100%);
+        background: -webkit-linear-gradient(top, #404040 0%, #191919 66%, #000000 100%);
+        background: linear-gradient(to bottom, #404040 0%, #191919 66%, #000000 100%);
+        border-top: 1px solid #4A4A4A;
+    }
+
+    table.darkTable tfoot td {
+        font-size: 12px;
+    }
+</style>
+
+<div class='back mb-5' align="center">
+    <div style="color:white">
+        {% if user.is_authenticated %}
+        <p>환영합니다 {{user.profile.nickname}}님</p>
+        <a href="{% url 'profile' user.username %}">프로필화면</a>
+        <img src="{{user}}" alt="">
+        <form action="{%url 'logout'%}" method="POST">
+            {%csrf_token%}
+            <input type="submit" value="로그아웃">
+        </form>
+        <br>
+        {% else %}
+        <p>로그인 해주세요</p>
+        <a href="{%url 'signup'%}">회원가입</a>
+        <a href="{%url 'login'%}">로그인</a>
+        {% endif %}
+    </div>
+    <div style="font-family: 'Noto Serif KR', serif; font-size:3em; color:azure;padding-top:3em;">우리들을 위한 말하기 공간</div>
+    <div style="font-family: 'Gaegu', cursive; font-size:8em; color:azure; padding-bottom:1em;">소근소근</div>
+</div>
 
 <button type="button" class="btn btn-dark"><a href="{% url 'write' %}" id="w_button">글쓰기 버튼</a></button>
 {%for p in posts%}
-    {% if p.blind == True %}
-    {% else %}
-    <div class="card mb-3 shadow" style="width: 100%;">
-        <div class="card-body">
-            카테고리 : {{p.category}}<br>
-            제목 : {{p.title}}<br>
-            <span style="font-size:0.8em;">{{p.user}} {{p.updated_at|date:"Y년m월d일"}} </span>
-            <a href="{%url 'read' p.id%}" class="stretched-link"></a>
-        </div>
+{% if p.blind == True %}
+{% else %}
+<div class="card mb-3 shadow" style="width: 100%;">
+    <div class="card-body">
+        카테고리 : {{p.category}}<br>
+        제목 : {{p.title}}<br>
+        <span style="font-size:0.8em;">{{p.user}} {{p.updated_at|date:"Y년m월d일"}} </span>
+        <a href="{%url 'read' p.id%}" class="stretched-link"></a>
     </div>
-    {% endif %}
+</div>
+{% endif %}
 {% endfor %}
 <br>
 
