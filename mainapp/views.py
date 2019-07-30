@@ -139,22 +139,6 @@ def category(request, category):
     return render(request, 'category.html', context)
 
 
-################################################################
-def setPLike(request, post_id):
-    username = Profile.objects.get(user = request.user)
-    post = Post.objects.get(id=post_id)
-    user = User.objects.get(post = post)
-    profile = Profile.objects.get(user = user)
-    tempstr = str(username.user) + " "
-    if tempstr in post.Post_list:
-        message="이미 공감 혹은 비공감 하셨습니다."
-    else:
-        post.Post_list = post.Post_list + tempstr
-        post.like_num+=1
-        profile.like_num+=1
-        profile.save()
-        post.save()
-    return redirect(read, post.id)
 
 
 
@@ -195,6 +179,7 @@ def setPLike(request, post_id):
     else:
         post.Post_list = post.Post_list + tempstr
         post.like_num+=1
+        post.like_result+=1
         profile.like_num+=1
         profile.save()
         post.save()
@@ -211,6 +196,7 @@ def setPdisLike(request, post_id):
     else:
         post.Post_list = post.Post_list + tempstr
         post.dislike_num+=1
+        post.like_result-=1
         profile.dislike_num+=1
         profile.save()
         post.save()

@@ -1,97 +1,201 @@
 {% extends 'base.html' %}
 {% block contents %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <title>소근소근 페이지</title>
+    <style>
+        .top, .middle {
+            margin-left: 5%;
+        }
 
-<div class="card mb-3 shadow" style="width: 100%;">
-    <div class="card-body">
-        {% if user.is_authenticated %}
-        <form action="{% url 'report' post.id%}">
-            {{post.report_num}}
-            <button type="submit" class="btn btn-primary btn-lg">신고</button>
-        </form>
-        {%endif%}
+        .top {
+            margin-top: 5%;
+        }
+        .top-card{
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-top: 8%;
+            margin-bottom: 3%;
+        }
+        .mid-card{
+            padding-top:0px;
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 3%;
+        }
+        .bot-card{
+            padding:0;
+            margin-left:5%;
+            margin-right:5%;
+        }
+        .card-body{
+            padding:0;
+        }
+        .back {
+            background-color: black;
+            font-family: 'Noto Serif KR', serif;
+        }
 
-        {%if post.anonymous == True%}
-            <h4 class="card-title">글쓴사람 : 익명</h4>
-        {%else%}
-        <h4 class="card-title">글쓴사람 : <a href="{% url 'p_profile' post.id post.user %}">{{post.user}}</h4></a>
-        <h4 class="card-title">별명 : <a href="{% url 'p_profile' post.id post.user %}">{{post.user.profile.nickname}}</a></h4>
-        {%endif%}
-        <h4 class="card-title">카테고리 : {{post.category}}</h4>
-        <h4 class="card-title">제목 : {{post.title}}</h4>
-        <h4 class="card-title">내용 : {{post.content}}</h4>
-        {%if post.image %}
-            <h4 class="card-title">사진 : <img src="{{post.image.url}}" alt=""></h4>
-        {%endif%}
-        <h4 class="card-title">공감수 : {{post.like_num}}</h4>
-        <h4 class="card-title">비공감수 : {{post.dislike_num}}</h4>
-        <h4 class="card-title">총점 : {{post.like_result}}</h4>
-        <h4 class="card-title">글쓴시간 : {{post.created_at}}</h4>
-        <h4 class="card-title">수정시간 : {{post.updated_at}}</h4>
-        {% if user.is_authenticated %}
-        <form action="{%url 'setPLike' post.id%}">
-            <button type="submit" class="btn btn-primary btn-lg">공감한다.</button>
-        </form>
-        <form action="{%url 'setPdisLike' post.id%}">
-            <button type="submit" class="btn btn-primary btn-lg">비공감한다.</button>
-        </form>
-        {% endif %}
-        
-        {%if request.user == post.user or request.user.is_staff %}
-        <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
-        <form action="{%url 'update' post.id%}">
-            <input type="submit" value="수정하기"></input>
-        </form>
-        <form action="{%url 'delete' post.id%}">
-            <input type="submit" value="삭제하기"></input>
-        </form>
-        {%endif%}
-    </div>
-</div>
+        .like_btn {
+            scale: none;
+            border: none;
+            padding: 0;
+            background: none;
+        }
 
-{% if user.is_authenticated %}
-<form action="{%url 'c_create' post.id%}" method="POST">
-    {%csrf_token%}
-    <div class="input-group mt-5 mb-5">
-        <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요">
-        <div class="input-group-append">
-            <button class="btn btn-danger"><i class="fas fa-pencil-alt"></i></button>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: hidden;
+            min-width: 160px;
+            padding: 1px 1px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .pad{
+            padding-left:10%;
+            padding-right:10%;
+            display:inline;
+        }
+    </style>
+</head>
+
+<body class="back">
+    <div style="background-image:url(" {% static 'bgimage.jpg' %} ")">
+        <div class="card top-card">
+            <div class="card-body">
+                <div class="top">
+                    {{post.category}}<br>
+                    <h2>{{post.title}}<br></h2>
+                    {%if post.anonymous == True%}
+                    글쓴사람 : 익명 / {{post.created_at}}
+                    {%else%}
+                    <a href="{% url 'p_profile' post.id post.user %}">{{post.user.profile.nickname}}</a>(<a
+                        href="{% url 'p_profile' post.id post.user %}">{{post.user}}</a>) / {{post.created_at}}
+                    {%endif%}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!-- dropdown  -->
+                    {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <span>...</span>
+                        <div class="dropdown-content">
+                            {% if request.user != post.user or request.user.is_staff %}
+                            <form action="{% url 'report' post.id%}">
+                                <!-- 신고 수 : {{post.report_num}} -->
+                                <button class="dropdown-item" type="submit">신고하기</button>
+                            </form>
+                            {% elif request.user == post.user or request.user.is_staff %}
+                            <form action="{%url 'update' post.id%}">
+                                <button class="dropdown-item" type="submit">수정하기</button>
+                            </form>
+                            <form action="{%url 'delete' post.id%}">
+                                <button class="dropdown-item" type="submit">삭제하기</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {%endif%}
+                    <!--  여기까지-->
+                </div>
+                <hr width="95%">
+                <!--------------------------------경계선------------------->
+                <div class="middle">
+                    {{post.content}}<br>
+                    {%if post.image %}
+                    <img src="{{post.image.url}}" alt=""><br>
+                    {%endif%}
+                    공감수 : {{post.like_num}}<br>
+                    비공감수 : {{post.dislike_num}}<br>
+                    총점 : {{post.like_result}}<br>
+                    <!-- 수정시간 : {{post.updated_at}}<br> -->
+
+                    <br><br>
+                    {% if user.is_authenticated %}
+                    <form action="{%url 'setPLike' post.id%}">
+                        <button type="submit" class="like_btn"><img src="{% static 'like.jpg'%}" width="30"
+                                height="30"></button>
+                    </form>
+                    <form action="{%url 'setPdisLike' post.id%}">
+                        <button type="submit" class="like_btn"><img src="{% static 'dislike.jpg'%}" width="30"
+                                height="30"></button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-    </div>
-</form>
-{% endif %}
 
-<!-- 아래 이후 댓글 -->
-<div>
-    <ul class="list-group mb-2">
-        {%for c in comment%}
-        <li class="list-group-item list-group-item-light">
-            <span style="font-weight: bold;font-size:0.7em;"><a href="{% url 'c_profile' c.id c.user %}">{{c.user.profile.nickname}}</a></span>
-            <!-- 댓글 쓴사람 -->
-            <br>
-            {{c.content}}
+        <div class="card mid-card">
+            <div class="card-body">
+                <div>
+                    <ul class="list-group mb-2">
+                        {%for c in comment%}
+                        <li class="list-group-item list-group-item-light">
+                            <span style="font-weight:bold;font-size:0.7em"><a
+                                    href="{% url 'c_profile' c.id c.user %}">{{c.user.profile.nickname}}</a></span>
+                            <!-- 댓글 쓴사람 -->
+                            {%if request.user == c.user or request.user.is_staff %}
+                            <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
+                            <form action="{%url 'c_delete' c.id%}"style="display:inline">
+                                <button type="submit" class="like_btn"><img src="{% static 'delete.jpg'%}" width="15" height="15"></button>
+                            </form>
+                            {%endif%}
+                            <br>
+                            {{c.content}}
+                            <br>
+                            {% if user.is_authenticated %}
+                            <div class="pad"></div>
+                            <form action="{%url 'setCLike' post.id c.id%}"style="display:inline" >
+                                <button type="submit" class="like_btn"><img src="{% static 'like.jpg'%}" width="30" height="30"></button>
+                                &nbsp;&nbsp;{{c.like_num}}
+                            </form>
+                            <div class="pad"></div>
+                            <form action="{%url 'setCdisLike' post.id c.id%}" style="display:inline">
+                                <button type="submit" class="like_btn"><img src="{% static 'dislike.jpg'%}" width="30" height="30"></button>
+                                &nbsp;&nbsp;{{c.dislike_num}}
+                            </form>
+                            <div class="pad"></div>
+                            {% endif %}
+                            
+
+                        </li>
+                        {%endfor%}
+                    </ul>
+                </div>
+            </div>
             {% if user.is_authenticated %}
-            <form action="{%url 'setCLike' post.id c.id%}">
-                <button type="submit" class="btn btn-primary btn-sm">공감한다.</button>
+            <form action="{%url 'c_create' post.id%}" method="POST">
+                {%csrf_token%}
+                <div class="input-group mt-5 mb-5">
+                    <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요">
+                    <div class="input-group-append">
+                        <button class="btn btn-danger"><i class="fas fa-pencil-alt"></i></button>
+                    </div>
+                </div>
             </form>
-            공감수 :  {{c.like_num}}
-            <form action="{%url 'setCdisLike' post.id c.id%}">
-                <button type="submit" class="btn btn-primary btn-sm">비공감한다.</button>
-            </form>
-            비공감수 :  {{c.dislike_num}}
-            {% endif %}
-            {%if request.user == c.user or request.user.is_staff %}
-            <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
-            <form action="{%url 'c_delete' c.id%}">
-                <input type="submit" value="댓글삭제"></input>
-            </form>
-            {%endif%}
-            
-        </li>
-        {%endfor%}
-    </ul>
-</div>
+        {% endif %}
+        </div>
+        <!-- 아래 이후 댓글 -->
 
-<button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'main'%}">글 목록</a></button>
+
+        
+
+        <button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'main'%}">글 목록</a></button>
+    </div>
+</body>
+
+</html>
+
 
 {% endblock %}
