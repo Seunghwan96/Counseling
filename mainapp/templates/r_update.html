@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lange="en">
+
+<head>
+    <title>소근소근 뒷얘기</title>
+    <style>
+        .card {
+            margin-top: 5%;
+            margin-bottom: 5%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+        .filebox label {
+            display: inline-block;
+            padding: .5em .75em;
+            color: #fff;
+            font-size: inherit;
+            line-height: normal;
+            vertical-align: middle;
+            background-color: white;
+            cursor: pointer;
+            border: 1px solid white;
+            border-radius: .25em;
+            -webkit-transition: background-color 0.2s;
+            transition: background-color 0.2s;
+        }
+
+        .filebox input[type="file"] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .form-content {
+            height: 100px;
+        }
+
+        body {
+            background-image:url("{% static 'bg.jpg'%}");
+            background-size: 300px;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        {% if user.is_authenticated %}
+        <form action="{%url 'r_update' review.id %}" method="POST" enctype="multipart/form-data" style="height:350px;">
+            {%csrf_token%}
+            <div class="input-group mt-5 mb-5" style="padding:0">
+                <ul style="list-style-type:none;">
+                    <h4>수정하기</h4><br>
+                    <li><input name="title" class="form-control" type="text" placeholder="제목" value="{{review.title}}">
+                    </li><br>
+                    <li><input name="content" class="form-control form-content" type="text" size="120%;"
+                            value="{{review.content}}" placeholder="소근소근 어땠나요? 서로가 더 훈훈해지는 후기 부탁드립니다."></li>
+                    <hr>
+                    <li>
+                        <span class="filebox">
+                            <label for="ex_file"><img src="{% static 'photo.jpg'%}" width="25" height="25"></label>사진
+                            <input type="file" id="ex_file" name="image" class="input_file" value="{{review.image}}">
+                            <span class="input-group-append" style="display:inline; padding-left:86%;">
+                                <button class="btn btn-light">등록</button>
+                            </span>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+</body>
+
+</html>
+
+
+{% endblock %}

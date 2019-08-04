@@ -7,33 +7,39 @@
 <head>
     <title>소근소근 페이지</title>
     <style>
-        .top, .middle {
+        .top,
+        .middle {
             margin-left: 5%;
         }
 
         .top {
             margin-top: 5%;
         }
-        .top-card{
-            margin-left: 5%;
-            margin-right: 5%;
-            margin-top: 8%;
+
+        .top-card {
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-top: 5%;
             margin-bottom: 3%;
         }
-        .mid-card{
-            padding-top:0px;
-            margin-left: 5%;
-            margin-right: 5%;
+
+        .mid-card {
+            padding-top: 0px;
+            margin-left: 10%;
+            margin-right: 10%;
             margin-bottom: 3%;
         }
-        .bot-card{
-            padding:0;
-            margin-left:5%;
-            margin-right:5%;
+
+        .bot-card {
+            padding: 0;
+            margin-left: 5%;
+            margin-right: 5%;
         }
-        .card-body{
-            padding:0;
+
+        .card-body {
+            padding: 0;
         }
+
         .back {
             background-color: black;
             font-family: 'Noto Serif KR', serif;
@@ -53,21 +59,35 @@
 
         .dropdown-content {
             display: none;
+            text-align: center;
             position: absolute;
-            background-color: hidden;
-            min-width: 160px;
-            padding: 1px 1px;
-            z-index: 1;
+            background-color: white;
+            min-width: 100px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            box-shadow: 0px 8px 16px 0px;
+            z-index: 2;
         }
 
         .dropdown:hover .dropdown-content {
             display: block;
         }
 
-        .pad{
-            padding-left:10%;
-            padding-right:10%;
-            display:inline;
+        .dropdown-item {
+            min-height: auto;
+            padding: 5px 0px 5px 0px;
+        }
+
+        .pad {
+            padding-left: 1%;
+            padding-right: 1%;
+            display: inline;
+        }
+        .comment{
+            margin-left:5%;
+            margin-right:5%;
+            margin-top:-2%;
+            margin-bottom:-2%;
         }
     </style>
 </head>
@@ -79,35 +99,42 @@
                 <div class="top">
                     {{post.category}}<br>
                     <h2>{{post.title}}<br></h2>
-                    {%if post.anonymous == True%}
-                    글쓴사람 : 익명 / {{post.created_at}}
-                    {%else%}
-                    <a href="{% url 'p_profile' post.id post.user %}">{{post.user.profile.nickname}}</a>(<a
-                        href="{% url 'p_profile' post.id post.user %}">{{post.user}}</a>) / {{post.created_at}}
-                    {%endif%}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <!-- dropdown  -->
-                    {% if user.is_authenticated %}
-                    <div class="dropdown">
-                        <span>...</span>
-                        <div class="dropdown-content">
-                            {% if request.user != post.user or request.user.is_staff %}
-                            <form action="{% url 'report' post.id%}">
-                                <!-- 신고 수 : {{post.report_num}} -->
-                                <button class="dropdown-item" type="submit">신고하기</button>
-                            </form>
-                            {% elif request.user == post.user or request.user.is_staff %}
-                            <form action="{%url 'update' post.id%}">
-                                <button class="dropdown-item" type="submit">수정하기</button>
-                            </form>
-                            <form action="{%url 'delete' post.id%}">
-                                <button class="dropdown-item" type="submit">삭제하기</button>
-                            </form>
-                            {% endif %}
+                    <div class="row">
+                        <div class="col">{%if post.anonymous == True%}
+                            글쓴사람 : 익명 / {{post.created_at}}
+                            {%else%}
+                            <a href="{% url 'p_profile' post.id post.user %}">{{post.user.profile.nickname}}</a>(<a
+                                href="{% url 'p_profile' post.id post.user %}">{{post.user}}</a>) / {{post.created_at}}
+                            {%endif%}
+                        </div>
+                        <div class="col" style="text-align:right">
+                            <!-- dropdown  -->
+                            {% if user.is_authenticated %}
+                            <div class="dropdown">
+                                <span>...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <div class="dropdown-content">
+                                    {% if request.user != post.user or request.user.is_staff %}
+                                    <form action="{% url 'report' post.id%}">
+                                        <!-- 신고 수 : {{post.report_num}} -->
+                                        <button class="dropdown-item" type="submit">신고하기</button>
+                                    </form>
+                                    {% elif request.user == post.user or request.user.is_staff %}
+                                    <form action="{%url 'update' post.id%}">
+                                        <button class="dropdown-item" type="submit">수정하기</button>
+                                    </form>
+                                    <form action="{%url 'delete' post.id%}">
+                                        <button class="dropdown-item" type="submit">삭제하기</button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {%endif%}
+                            <!--  여기까지-->
                         </div>
                     </div>
-                    {%endif%}
-                    <!--  여기까지-->
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                 </div>
                 <hr width="95%">
                 <!--------------------------------경계선------------------->
@@ -116,22 +143,24 @@
                     {%if post.image %}
                     <img src="{{post.image.url}}" alt=""><br>
                     {%endif%}
-                    공감수 : {{post.like_num}}<br>
-                    비공감수 : {{post.dislike_num}}<br>
                     총점 : {{post.like_result}}<br>
                     <!-- 수정시간 : {{post.updated_at}}<br> -->
 
                     <br><br>
-                    {% if user.is_authenticated %}
-                    <form action="{%url 'setPLike' post.id%}">
-                        <button type="submit" class="like_btn"><img src="{% static 'like.jpg'%}" width="30"
-                                height="30"></button>
-                    </form>
-                    <form action="{%url 'setPdisLike' post.id%}">
-                        <button type="submit" class="like_btn"><img src="{% static 'dislike.jpg'%}" width="30"
-                                height="30"></button>
-                    </form>
-                    {% endif %}
+                    <div style="text-align:center">
+                        {% if user.is_authenticated %}
+                        <form action="{%url 'setPLike' post.id%}" style="display:inline">
+                            <button type="submit" class="like_btn"><img src="{% static 'like.jpg'%}" width="30"
+                                    height="30"></button>&nbsp;&nbsp;{{post.like_num}}
+                        </form>
+                        <div class="pad">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                        <form action="{%url 'setPdisLike' post.id%}" style="display:inline">
+                            <button type="submit" class="like_btn"><img src="{% static 'dislike.jpg'%}" width="30"
+                                    height="30"></button>&nbsp;&nbsp;{{post.dislike_num}}
+                        </form>
+                        {% endif %}
+                    </div>
+                    <br><br>
                 </div>
             </div>
         </div>
@@ -147,51 +176,61 @@
                             <!-- 댓글 쓴사람 -->
                             {%if request.user == c.user or request.user.is_staff %}
                             <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
-                            <form action="{%url 'c_delete' c.id%}"style="display:inline">
-                                <button type="submit" class="like_btn"><img src="{% static 'delete.jpg'%}" width="15" height="15"></button>
+                            <form action="{%url 'c_delete' c.id%}" style="display:inline">
+                                <button type="submit" class="like_btn"><img src="{% static 'delete.jpg'%}" width="15"
+                                        height="15"></button>
                             </form>
                             {%endif%}
-                            <br>
-                            {{c.content}}
-                            <br>
                             {% if user.is_authenticated %}
                             <div class="pad"></div>
-                            <form action="{%url 'setCLike' post.id c.id%}"style="display:inline" >
-                                <button type="submit" class="like_btn"><img src="{% static 'like.jpg'%}" width="30" height="30"></button>
+                            <form action="{%url 'setCLike' post.id c.id%}" style="display:inline">
+                                <button type="submit" class="like_btn"><img src="{% static 'like.jpg'%}" width="15"
+                                        height="15"></button>
                                 &nbsp;&nbsp;{{c.like_num}}
                             </form>
                             <div class="pad"></div>
                             <form action="{%url 'setCdisLike' post.id c.id%}" style="display:inline">
-                                <button type="submit" class="like_btn"><img src="{% static 'dislike.jpg'%}" width="30" height="30"></button>
+                                <button type="submit" class="like_btn"><img src="{% static 'dislike.jpg'%}" width="15"
+                                        height="15"></button>
                                 &nbsp;&nbsp;{{c.dislike_num}}
                             </form>
-                            <div class="pad"></div>
                             {% endif %}
-                            
+                            <br>
+                            {{c.content}}
+                            <br>
+
+
 
                         </li>
                         {%endfor%}
                     </ul>
                 </div>
             </div>
-            {% if user.is_authenticated %}
-            <form action="{%url 'c_create' post.id%}" method="POST">
-                {%csrf_token%}
-                <div class="input-group mt-5 mb-5">
-                    <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요">
-                    <div class="input-group-append">
-                        <button class="btn btn-danger"><i class="fas fa-pencil-alt"></i></button>
+            <span class="comment">
+                {% if user.is_authenticated %}
+                <form action="{%url 'c_create' post.id%}" method="POST">
+                    {%csrf_token%}
+                    <div class="input-group mt-5 mb-5">
+                        <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요">
+                        <div class="input-group-append">
+                            <button class="btn btn-danger"><i class="fas fa-pencil-alt"></i></button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        {% endif %}
+                </form>
+                {% endif %}
+            </span>
         </div>
         <!-- 아래 이후 댓글 -->
 
+        <div style="text-align: center">
+            <form action="{%url 'main' %}">
+                <button type="submit" class="like_btn" style="background:black"><img src="{% static 'home.jpg'%}"
+                        width="40" height="40"></button>
+            </form>
+        </div>
+        <br>
 
-        
-
-        <button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'main'%}">글 목록</a></button>
+        <!-- <button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'main'%}">글 목록</a></button> -->
     </div>
 </body>
 

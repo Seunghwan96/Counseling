@@ -44,6 +44,23 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 
+    
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100, blank=False) #제목
+    content = models.TextField(blank=False) #내용
+    created_at = models.DateField(auto_now_add = True)
+    updated_at = models.DateField(auto_now=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+
+
+    def __str__(self):
+        return self.title
+    
+    def summary(self):
+        return self.content[:100]
+
 class Profile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.CASCADE) #유저랑 1:1관계
     name=models.CharField(max_length=10) #이름
@@ -56,8 +73,6 @@ class Profile(models.Model):
     subscribe_person = models.IntegerField(default=0) #나를 구돗한 사람들
     like_num = models.IntegerField(default=0) #  공감 받은 횟수
     dislike_num = models.IntegerField(default=0) #   비공감 받은 횟수
-    # nickname = models.CharField(max_length=50, blank=True)
-    # region=models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         n_user=str(self.user)

@@ -46,4 +46,9 @@ urlpatterns = [
 
     path('report/<int:post_id>', mainapp.views.report,name='report'), #신고기능
     path('category/<str:category>', mainapp.views.category, name='category'), #카테고리 검색
+
+    path('review/', mainapp.views.review, name='review'),
+    path('r_write/', mainapp.views.r_write, name='r_write'), #후기작성
+    path('r_update/<int:review_id>',mainapp.views.r_update, name='r_update'), #후기수정
+    path('r_delete/<int:review_id>', mainapp.views.r_delete, name='r_delete'), #후기삭제
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

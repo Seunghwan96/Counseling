@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lange="en">
+
+<head>
+    <title>소근소근 뒷얘기</title>
+    <style>
+        .card {
+            margin-top: 5%;
+            margin-bottom: 5%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        .comment {
+            border: 10px;
+            margin-top: 5px;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-bottom: 5%;
+            border: 1px solid;
+            border-color: black;
+        }
+
+        .filebox label {
+            display: inline-block;
+            padding: .5em .75em;
+            color: #fff;
+            font-size: inherit;
+            line-height: normal;
+            vertical-align: middle;
+            background-color: white;
+            cursor: pointer;
+            border: 1px solid white;
+            border-radius: .25em;
+            -webkit-transition: background-color 0.2s;
+            transition: background-color 0.2s;
+        }
+
+        .filebox input[type="file"] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .form-content {
+            height: 100px;
+        }
+
+        body {
+            background-image:url("{% static 'bg.jpg'%}");
+            background-size: 300px;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        {% if user.is_authenticated %}
+        <form action="{%url 'r_write' %}" method="POST" enctype="multipart/form-data" style="height:300px;">
+            {%csrf_token%}
+            <div class="input-group mt-5 mb-5" style="padding:0">
+                <ul style="list-style-type:none;">
+                    <li><input name="title" class="form-control" type="text" placeholder="제목"></li><br>
+                    <li><input name="content" class="form-control form-content" type="text" size="120%;"
+                            placeholder="소근소근 어땠나요? 서로가 더 훈훈해지는 후기 부탁드립니다."></li>
+                    <hr>
+                    <li>
+                        <span class="filebox">
+                            <label for="ex_file"><img src="{% static 'photo.jpg'%}" width="25" height="25"></label>사진
+                            <input type="file" id="ex_file" name="image" class="input_file">
+                            <span class="input-group-append" style="display:inline; padding-left:86%;">
+                                <button class="btn btn-light">등록</button>
+                            </span>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+        </form>
+        {% else %}
+        <div class="card-body">후기를 남기려면 <a href="{%url 'login'%}"style="text-decoration:none; color:black; font-weight:bold;" >로그인</a> 해주세요.</div>
+        {% endif %}
+    </div>
+    <div class="card">
+
+        <div class="card-body">
+            <div>
+                <ul class="list-group mb-2">
+                    {%for r in reviews%}
+                    <li class="list-group-item list-group-item-light">
+                        <span style="font-weight:bold;font-size:0.7em">{{r.user.profile.nickname}}</span>
+                        <!-- 댓글 쓴사람 -->
+                        {%if request.user == r.user or request.user.is_staff %}
+                        <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
+                        <form action="{%url 'r_update' r.id%}" style="display:inline">
+                                <button type="submit" class="like_btn"><img src="{% static 'rewrite.jpg'%}" width="15"
+                                        height="15"></button>
+                            </form>
+                        <form action="{%url 'r_delete' r.id%}" style="display:inline">
+                            <button type="submit" class="like_btn"><img src="{% static 'delete.jpg'%}" width="15"
+                                    height="15"></button>
+                        </form>
+                        {%endif%}
+                        <br>
+                        {{r.title}}
+                        <br>
+                        {{r.content}}
+                        <br>
+                        {% if r.image %}
+                        <img src="{{r.image.url}}" alt="" style="width:50px; height:50px;">
+                        <br>
+                        {%endif%}
+                        <p style="font-size:10px;">{{r.created_at}}</p>
+                    </li>
+                    <br>
+                    {%endfor%}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!-- 아래 이후 댓글 -->
+
+    <div style="text-align: center">
+        <form action="{%url 'main' %}">
+            <button type="submit" class="like_btn" style="background:black"><img src="{% static 'home.jpg'%}" width="40"
+                    height="40"></button>
+        </form>
+    </div>
+</body>
+
+</html>
+
+
+{% endblock %}

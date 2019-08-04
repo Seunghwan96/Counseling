@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Post, Profile, Comment #Blog모델을 가져와서 쓸꺼니깐 위에 적어줌
+from .models import Post, Profile, Comment, Review #Blog모델을 가져와서 쓸꺼니깐 위에 적어줌
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from itertools import chain
@@ -62,6 +62,53 @@ def write(request): #GET 은 검색을 위함, POST는 데이터를 전송하고
 
         return redirect('main')
 
+def review(request):
+    reviews = Review.objects.all()
+    context={
+        "reviews":reviews 
+        }
+    return render(request, 'review.html',context)
+
+
+def r_write(request): # Review Wrtie
+    if request.method =="GET":
+        return render(request, 'r_write.html')
+    elif request.method == "POST":
+        review = Review()
+        review.user = request.user
+        review.title = request.POST['title']
+        review.content = request.POST['content']
+        try:
+            review.image = request.FILES['image']
+        except:
+            pass
+
+        review.save()
+        return redirect('review')
+
+def r_update(request, review_id):
+    if request.method == "GET":
+        review = Review.objects.get(id=review_id)
+        context={
+            "review":review
+        }
+        return render(request, "r_update.html", context)
+    elif request.method=="POST":
+        review = Review.objects.get(id =review_id)
+        review.title= request.POST['title']
+        review.content=request.POST['content']
+        try:
+            review.image= request.FILES['image']
+        except:
+            pass
+        review.save()
+        return redirect('review')
+
+def r_delete(request,review_id):
+    review = Review.objects.get(id = review_id)
+    review.delete()
+    return redirect('review')
+
 def read(request,post_id):
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.filter(post = post_id)
@@ -100,6 +147,7 @@ def update_profile(request,user):
         return render(request, "update_profile.html", context)
     elif request.method=="POST":
         profile = Profile.objects.get(user = request.user)
+        profile.nickname = request.POST['nickname']
         profile.phone =request.POST['phone']
         try:
             profile.image = request.FILES['image']
