@@ -78,13 +78,15 @@
     }
 </style>
 
-<div class='back mb-5' align="center">
+<div class='back mb-5' align="center"> 
     
     <div style="font-family: 'Noto Serif KR', serif; font-size:3em; color:azure;padding-top:3em;">우리들을 위한 말하기 공간</div>
     <div style="font-family: 'Gaegu', cursive; font-size:8em; color:azure; padding-bottom:1em;">소근소근</div>
 </div>
-
+{% if user.is_authenticated %}
 <button type="button" class="btn btn-dark"><a href="{% url 'write' %}" id="w_button">글쓰기 버튼</a></button>
+{% else %}
+{%endif%}
 {%for p in posts%}
 {% if p.blind == True %}
 {% else %}

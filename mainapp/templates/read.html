@@ -89,6 +89,10 @@
             margin-top:-2%;
             margin-bottom:-2%;
         }
+        .post-image{
+            width:10%;
+            height: 10%;
+        }
     </style>
 </head>
 
@@ -103,8 +107,8 @@
                         <div class="col">{%if post.anonymous == True%}
                             글쓴사람 : 익명 / {{post.created_at}}
                             {%else%}
-                            <a href="{% url 'p_profile' post.id post.user %}">{{post.user.profile.nickname}}</a>(<a
-                                href="{% url 'p_profile' post.id post.user %}">{{post.user}}</a>) / {{post.created_at}}
+                            <a href="{% url 'p_profile' post.id post.user %}" style="text-decoration:none; color:darkgray;">{{post.user.profile.nickname}}</a>(<a
+                                href="{% url 'p_profile' post.id post.user %}" style="text-decoration:none; color:darkgray;">{{post.user}}</a>) / {{post.created_at|date:"Y년 m월 d일"}}
                             {%endif%}
                         </div>
                         <div class="col" style="text-align:right">
@@ -141,9 +145,9 @@
                 <div class="middle">
                     {{post.content}}<br>
                     {%if post.image %}
-                    <img src="{{post.image.url}}" alt=""><br>
+                    <img src="{{post.image.url}}" alt="" class="post-image"><br>
                     {%endif%}
-                    총점 : {{post.like_result}}<br>
+                    <!-- 총점 : {{post.like_result}}<br> -->
                     <!-- 수정시간 : {{post.updated_at}}<br> -->
 
                     <br><br>

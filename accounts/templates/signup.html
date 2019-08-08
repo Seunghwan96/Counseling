@@ -3,49 +3,135 @@
 {% extends 'base.html' %}
 
 {% block contents %}
+{% load staticfiles %}
 
-<div style="color:white">
-    <form action="{%url 'signup'%}" method="post" enctype="multipart/form-data">
-        {%csrf_token%}
+<head>
+    <title>소근소근 회원가입</title>
+    <style>
+        .card {
+            margin-top: 1%;
+            margin-bottom: 5%;
+            margin-left: 10%;
+            margin-right: 10%;
+            padding-left: 5%;
+            padding-right: 10%;
+            text-align: center;
+            color: black;
+            border: 0;
+            outline: 0;
+        }
 
-        아이디:
-        <br>
-        <input name="id" type="text" value="">
-        <br>
-        비밀번호:
-        <br>
-        <input name="password1" type="password" value="">
-        <br>
-        비밀번호 확인:
-        <br>
-        <input name="password2" type="password" value="">
-        <br>
-        별명:
-        <br>
-        <input name="nickname" type="text" value="">
-        <br>
-        이름:
-        <br>
-        <input name="name" type="text" value="">
-        <br>
-        성별:
-        <br>
-        <select name="sex" id="">
-            <option value="남성">남성</option>
-            <option value="여성">여성</option>
-        </select>
-        <br>
-        생년월일:
-        <br>
-        <input name="birth" type="text" value="">
-        <br>
-        전화번호:
-        <br>
-        <input name="phone" type="text" value="">
-        <br>
-        <input class="btn btn-primary" type="submit" value="Sign Up!">
+        .card-body {
+            text-align: left;
+            margin-left: 10%;
+            min-width: 100%;
+        }
 
-    </form>
+        .container {
+            background-image:url("{% static 'bg.jpg'%}");
+            background-size: 300px;
+            font-family: 'Noto Serif KR', serif;
+            margin-left: 0%;
+            margin-right: 0%;
+            min-width: 100%;
+            height: 200px;
+            color: white;
+            text-align: center;
+            font-size: 300%;
+            font-weight: bold;
+            padding-top: 4%;
+        }
+
+        body {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .thr {
+            border: 0;
+            height: 4px;
+            width: 70%;
+            background: rgb(9, 9, 50);
+        }
+        th{
+            font-size:18px;
+            width:25%;
+        }
+        td{
+            padding:2%;
+        }
+        td input{
+            width:600px;
+            height:60px;
+            padding:1%;
+        }
+        .btns{
+            background-color: rgb(9,9,50);
+            color:white;
+            width:20%;
+            height:50px;
+            border-radius:10px 10px 10px 10px;
+        }
+    </style>
+</head>
+<div class="container">
+    회원가입
 </div>
+
+<body>
+    <h2 style="text-align: center; margin-top:5%;">간편한 회원가입으로 편리하게 이용해보세요.</h2><br>
+    <hr class="thr">
+    <div class="card" style="color:black">
+        <div class="card-body">
+            <form action="{%url 'signup'%}" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>아이디</th>
+                            <td><input name="id" type="text" placeholder="아이디" ></td>
+                        </tr>
+                        <p></p>
+                        <tr>
+                            <th>비밀번호</th>
+                            <td><input name="password1" type="password" value="" placeholder="비밀번호는 8~16자리 영문,숫자 조합">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호 확인</th>
+                            <td><input name="password2" type="password" value="" placeholder="비밀번호 재확인"></td>
+                        </tr>
+                        <tr>
+                            <th>별명</th>
+                            <td><input name="nickname" type="text" value="" placeholder="별명"></td>
+                        </tr>
+                        <tr>
+                            <th>이름</th>
+                            <td><input name="name" type="text" value="" placeholder="이름"></td>
+                        </tr>
+                        <tr>
+                            <th>성별</th>
+                            <td><select name="sex" id="">
+                                    <option value="남성">남성</option>
+                                    <option value="여성">여성</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <th>생년월일</th>
+                            <td><input name="birth" type="text" value="" placeholder="YYYY-MM-DD"></td>
+                        </tr>
+                        <tr>
+                            <th>전화번호</th>
+                            <td><input name="phone" type="text" value="" placeholder="010-****-****"></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+<br><br>
+                <input class="btns" type="submit" value="가입하기" style="margin-left:35%;">
+            </form>
+        </div>
+    </div>
+</body>
+
 
 {% endblock %}

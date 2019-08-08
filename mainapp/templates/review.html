@@ -64,6 +64,7 @@
 </head>
 
 <body>
+    
     <div class="card">
         {% if user.is_authenticated %}
         <form action="{%url 'r_write' %}" method="POST" enctype="multipart/form-data" style="height:300px;">
@@ -121,14 +122,38 @@
                         <br>
                         {%endif%}
                         <p style="font-size:10px;">{{r.created_at}}</p>
+                        
                     </li>
                     <br>
                     {%endfor%}
                 </ul>
             </div>
+            <div class="pn" style="text-align: center">
+                    {% if reviews.has_previous %}
+                        <a class="prev btn btn-info" href="?page={{reviews.previous_page_number}}">이전</a>
+                    {% endif %}
+                        {% for pg in page_range %}
+                            {% if reviews.number == pg %}
+                                <a href="?page={{pg}}" class="btn btn-default">{{pg}}</a>
+                            {% else %}
+                                <a href="?page={{pg}}" class="btn">{{pg}}</a>
+                            {% endif %}
+                        {% endfor %}
+    
+                    
+                    {% if reviews.has_next %}
+                        <a class="next btn btn-info" href="?page={{reviews.next_page_number}}">다음</a>
+                    {% endif %}
+                    <span class="clear_both"></span>
+                    
+            </div>   
         </div>
 
+
+
     </div>
+
+    
     <!-- 아래 이후 댓글 -->
 
     <div style="text-align: center">
@@ -138,8 +163,5 @@
         </form>
     </div>
 </body>
-
 </html>
-
-
 {% endblock %}

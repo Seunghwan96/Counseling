@@ -1,34 +1,78 @@
 {%extends 'base.html' %}
 {%block contents%}
-<h1>글쓰기 페이지</h1>
-<form action="{% url 'write' %}" method="POST" enctype="multipart/form-data">
-    <!--GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함-->
-    {%csrf_token%}
-    <div class="input-group-prepend">
-        <div class="input-group-text">
-            <input type="checkbox" name="anonymous" value="1">
-            <span style="font-size: 0.7em;">익명</span>
-        </div>
-    </div>
-    <select name="category" id="">
-        <option value="진로">진로</option>
-        <option value="취업">취업</option>
-        <option value="연애">연애</option>
-        <option value="친구">친구</option>
-        <option value="외모">외모</option>
-        <option value="19">19</option>
-        <option value="기타">기타</option>
-    </select>
-    <p>제목</p>
-    <input type="text" name="title">
-    <p>내용</p>
-    <textarea name="content" id="" cols="30" rows="10"></textarea>
-    <br>
-    <input type="file" name="image"><br>
+{% load staticfiles %}
+<style>
+    body {
+        height: 90vh;
+        background-image:url("{% static '검은 별 건물 사진.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
-    <br>
-    <input type="submit" value="글쓰기">
-    <br>
-</form>
-<a href="{% url 'main' %}">Home</a>
-{%endblock%} 
+    .hr-one {
+        width: 100%;
+    }
+</style>
+<div class="container">
+    <div class="card mt-5 mb-3 shadow" style="width: 100%;">
+        <br><br>
+        <h1 style="text-align:center;">글쓰기 페이지</h1>
+        <br>
+        <hr class="hr-one" align="center">
+        <br>
+        <form action="{% url 'write' %}" method="POST" enctype="multipart/form-data">
+            <!--GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함-->
+            {%csrf_token%}
+            <div class="form-group">
+                <div class="form-group col-md-4">
+                    <label for="inputState">카테고리</label>
+                    <select name="category" id="inputState" class="form-control">
+                        <option value="진로">진로</option>
+                        <option value="취업">취업</option>
+                        <option value="연애">연애</option>
+                        <option value="친구">친구</option>
+                        <option value="외모">외모</option>
+                        <option value="19">19</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">제목</label>
+                        <input type="text" class="form-control" id="inputCity" name="title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">내용</label>
+                        <input type="content" id="inputCity" class="form-control" style="width:800px; height:400px;">
+                    </div>
+                </div>
+
+
+                <!-- <input type="file" name="image" img src="로고 작게.jpg"> -->
+                <div class="form-group">
+                    <div class="form-group col-md-6">
+                        <label class="btn btn-dark">
+                            파일추가 <input type="file" name="image">
+                        </label>
+                        <!-- style="display: none;" -->
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <div class="form-group col-md-6">
+                        <button type="button" class="btn btn-dark">글쓰기</button>
+
+                    </div>
+                </div>
+                <br>
+        </form>
+
+    </div>
+</div>
+{%endblock%}

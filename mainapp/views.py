@@ -64,8 +64,18 @@ def write(request): #GET 은 검색을 위함, POST는 데이터를 전송하고
 
 def review(request):
     reviews = Review.objects.all()
+    #reviews = chain(reviews, (Review.objects.order_by('-created_at').all())) # 최신순정렬해야함!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+    paginator = Paginator(reviews,5) 
+    now_page = request.GET.get('page')
+    reviews = paginator.get_page(now_page)
+    index = reviews.number - 1
+    max_index = len(paginator.page_range)
+    start_index = index - 3 if index >= 3 else 0
+    end_index = index + 3 if index <= max_index - 3 else max_index
+    page_range = list(paginator.page_range)[start_index:end_index]
     context={
-        "reviews":reviews 
+        "reviews":reviews,
+        "page_range": page_range
         }
     return render(request, 'review.html',context)
 
@@ -179,14 +189,14 @@ def report(request, post_id):
 def category(request, category):
     posts = Post.objects.all()
     name = str(category)
-    category = posts.filter(category__icontains=category)
+    latest = posts.filter(category__icontains=category).order_by('-created_at')
+    best = posts.filter(category__icontains=category).order_by('-like_num')
     context={
-        "category":category,
+        "best":best,
         "name":name,
+        "latest":latest,
         }
     return render(request, 'category.html', context)
-
-
 
 
 

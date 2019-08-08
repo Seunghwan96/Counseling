@@ -1,47 +1,90 @@
 {% extends 'base.html' %}
 {% block contents %}
-<div style="color:white">
-        {% if user.is_authenticated %}
-        <p>환영합니다 {{user.profile.nickname}}님</p>
-        <a href="{% url 'profile' user.username %}">프로필화면</a>
-        <img src="{{user}}" alt="">
-        <form action="{%url 'logout'%}" method="POST">
-            {%csrf_token%}
-            <input type="submit" value="로그아웃">
-        </form>
-        <br>
-        {% else %}
-        <p>로그인 해주세요</p>
-        <a href="{%url 'signup'%}">회원가입</a>
-        <a href="{%url 'login'%}">로그인</a>
-        {% endif %}
+{% load staticfiles %}
+
+<head>
+    <title>소근소근 프로필</title>
+    <style>
+        .card {
+            margin-top: 5%;
+            margin-bottom: 5%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 100%;
+            /* 이미지 반크기만큼 반경을 잡기*/
+        }
+
+        .like_btn {
+            scale: none;
+            border: none;
+            padding: 0;
+            background: none;
+        }
+
+        body {
+            background-image:url("{% static 'bg.jpg'%}");
+            background-size: 300px;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.1em;
+        }
+        .card-title{
+            margin-left:20%;
+        }
+        .nickname{
+            font-size:40px;
+        }
+        .name{
+            font-size:20px;
+            font-weight: bold;
+        }
+        .count{
+            font-size:30px;
+        }
+        .old{
+            font-size:18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <span class="col">
+                    <h4 class="card-title">
+                        {% if profile.image %}
+                        <img src="{{profile.image.url}}" alt="" class="profile-image">
+                        {% else %}
+                        <img src="{% static 'default.jpt' %}" alt="" class="profile-image">
+                        {%endif%}
+                    </h4>
+                </span>
+                <span class="col">
+                    <div class="nickname">{{profile.nickname}}({{profile.user}})</div><br>
+                    <img src="{% static 'like.jpg'%}" width="40" height="40" class="btns"><span class="count">&nbsp;{{profile.like_num}}</span>
+                    <img src="{% static 'dislike.jpg'%}" width="40" height="40" class="btns" style="margin-left:40%;"><span class="count">&nbsp;{{profile.dislike_num}}</span><br><br>
+                    <span class="name">{{profile.name}} / {{profile.sex}}</span><br>
+                    <br>
+                    <span class="old">출생 : {{profile.birth}}</span><br><br>
+                    {%if request.user == profile.user or request.user.is_staff %}<!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
+                    <form action="{%url 'update_profile' user.username%}">
+                        <button  type="submit" class="btn btn-light" value="">프로필 편집</button>
+                    </form>
+                    {%endif%}
+                </span>
+            </div>
+            <!-- <h4 class="card-title">전화번호 : {{profile.phone}}</h4> -->
+
+
+
+
+        </div>
     </div>
-<h1>프로필화면</h1>
-
-<div class="card mb-3 shadow" style="width: 100%;">
-    <div class="card-body">
-        <h4 class="card-title">아이디 : {{profile.user}}</h4>
-        <h4 class="card-title">별명 : {{profile.nickname}}</h4>
-        <h4 class="card-title">이름 : {{profile.name}}</h4>
-        <h4 class="card-title">성별 : {{profile.sex}}</h4>
-        <h4 class="card-title">생년월일 : {{profile.birth}}</h4>
-        <h4 class="card-title">전화번호 : {{profile.phone}}</h4>
-        <h4 class="card-title">사진 : 
-        {% if profile.image %}
-            <img src="{{profile.image.url}}" alt="">
-        {%endif%}
-        </h4>
-        <h4 class="card-title">구독자수 : {{profile.subscribe_person}}</h4>
-        <h4 class="card-title">공감수 : {{profile.like_num}}</h4>
-        <h4 class="card-title">비공감수 : {{profile.dislike_num}}</h4>
-
-        {%if request.user == profile.user or request.user.is_staff %}
-        <!-- 댓글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
-        <form action="{%url 'update_profile' user.username%}">
-            <input type="submit" value="수정하기"></input>
-        </form>
-        {%endif%}
-
-    </div>
-</div>
+</body>
 {%endblock%}

@@ -1,20 +1,101 @@
 {% extends 'base.html' %}
 {% block contents %}
-<h2 style="color:white">{{name}} 게시판</h2>
-<button type="button" class="btn btn-dark"><a href="{% url 'write' %}" id="w_button">글쓰기 버튼</a></button>
-{%for p in category%}
-    {% if p.blind == True %}
-    {% else %}
-    <div class="card mb-3 shadow" style="width: 100%;">
-        <div class="card-body">
-            카테고리 : {{p.category}}<br>
-            제목 : {{p.title}}<br>
-            <span style="font-size:0.8em;">{{p.user}} {{p.updated_at|date:"Y년m월d일"}} </span>
-            <a href="{%url 'read' p.id%}" class="stretched-link"></a>
-        </div>
+{% load staticfiles %}
+
+<head>
+    <title>소근소근 {{name}}만 모아봤어</title>
+    <style>
+        body {
+            background-image:url("{% static 'bg.jpg'%}");
+            background-size: 300px;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.1em;
+        }
+
+        .card {
+            margin-top: 5%;
+            margin-bottom: 5%;
+            margin-left: 10%;
+            margin-right: 10%;
+            padding-left:3%;
+            padding-right: 3%;
+        }
+        th{
+            text-align: center;
+        }
+        td{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class=card>
+        <br>
+        <h2 style="color:black">공감 베스트</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <th colspan="4"><hr></th>
+                </tr>
+                <tr>
+                    <th width="30%" >제목</th>
+                    <th width="10%">작성자</th>
+                    <th width="5%">공감수</th>
+                    <th width="15%">작성일</th>
+                </tr>
+                <tr>
+                    <th colspan="4"><hr></th>
+                </tr>
+                {%for p in best%}
+                {% if p.blind == True %}
+                {% else %}
+                <tr>
+                    <td class =link style="text-align: left;"><a href="{%url 'read' p.id%}" style="text-decoration: none; color:black;">{{p.title}}</a></td>
+                    <td>{{p.user.profile.nickname}}</td>
+                    <td>{{p.like_num}}</td>
+                    <td> {{p.updated_at|date:"m월 d일"}}</td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+        <br>
     </div>
-    {% endif %}
-{% endfor %}
-<br>
+
+    <div class=card>
+            <br>
+            <h2 style="color:black">오늘의 새글</h2>
+            <table>
+                <tbody>
+                    <tr>
+                        <th colspan="4"><hr></th>
+                    </tr>
+                    <tr>
+                        <th width="30%" >제목</th>
+                        <th width="10%">작성자</th>
+                        <th width="5%">공감수</th>
+                        <th width="15%">작성일</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4"><hr></th>
+                    </tr>
+                    {%for p in latest%}
+                    {% if p.blind == True %}
+                    {% else %}
+                    <tr>
+                        <td style="text-align: left"><a href="{%url 'read' p.id%}">{{p.title}}</a></td>
+                        <td>{{p.user.profile.nickname}}</td>
+                        <td>{{p.like_num}}</td>
+                        <td> {{p.updated_at|date:"m월 d일"}}</td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+        </div>
+    <button type="button" class="btn btn-dark"><a href="{% url 'write' %}" id="w_button">글쓰기 버튼</a></button>
+</body>
 
 {% endblock %}
