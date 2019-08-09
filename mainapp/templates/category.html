@@ -22,31 +22,38 @@
         }
         th{
             text-align: center;
+            color:azure;
+            font-family: 'Noto Serif KR', serif;"
         }
         td{
             text-align: center;
+        }
+
+        .b{
+            border: 2px solid #bcbcbc;
+        
         }
     </style>
 </head>
 
 <body>
-    <div class=card >
+    <div class="card b" style="background:rgba(252, 250, 250, 0.1);" >
         <br>
-        <h2 style="color:black;font-weight:900;font-family: 'Noto Serif KR', serif;">공감 베스트</h2>
+        <h2 style="color:azure; font-weight:900;font-family: 'Noto Serif KR', serif;" >공감 베스트</h2>
         <table>
             <tbody>
                 <tr>
-                    <th colspan="4"><hr></th>
+                    <th colspan="4"><hr style="border-color:azure;"></th>
                 </tr>
                 <tr>
-                    <th width="30%" >제목</th>
-                    <th width="10%">작성자</th>
-                    <th width="5%">공감수</th>
-                    <th width="15%">작성일</th>
+                    <th width="30%" style=" color:azure; font-family: 'Noto Serif KR', serif;" >제목</th>
+                    <th width="10%" style=" color:azure; font-family: 'Noto Serif KR', serif;">작성자</th>
+                    <th width="5%" style=" color:azure; font-family: 'Noto Serif KR', serif;">공감수</th>
+                    <th width="15%"style=" color:azure; font-family: 'Noto Serif KR', serif;">작성일</th>
                 </tr>
                 <tr>
-                    <th colspan="4"><hr></th>
-                </tr>x
+                    <th colspan="4"><hr style="border-color:azure;"></th>
+                </tr>
                 {%for p in best%}
                 {% if p.blind == True %}
                 {% else %}
@@ -63,16 +70,16 @@
         <br>
     </div>
 
-    <div class=card>
+    <div class="card b" style="background:rgba(252, 250, 250, 0.1);">
             <br>
             <div class="row">
-            <h2 style="color:black;font-weight:900;font-family: 'Noto Serif KR', serif;">오늘의 새글</h2>
+            <h2 style="color:azure;font-weight:900;font-family: 'Noto Serif KR', serif;">오늘의 새글</h2>
             <button type="button" class="btn btn-secondary" style="position:relative; left:1100px;"><a href="{% url 'write' %}" id="w_button" style="color:black" >글쓰기 버튼</a></button>
         </div>
             <table>
                 <tbody>
                     <tr>
-                        <th colspan="4"><hr></th>
+                        <th colspan="4"><hr style="border-color:azure;"></th>
                     </tr>
                     <tr>
                         <th width="30%" >제목</th>
@@ -81,7 +88,7 @@
                         <th width="15%">작성일</th>
                     </tr>
                     <tr>
-                        <th colspan="4"><hr></th>
+                        <th colspan="4"><hr style="border-color:azure;"></th>
                     </tr>
                     {%for p in latest%}
                     {% if p.blind == True %}
