@@ -1,20 +1,38 @@
 {%extends 'base.html' %}
 {%block contents%}
 {% load staticfiles %}
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:500px">소근소근</a>
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:900px">소근소근</a>
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:100px">소근소근</a>
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:300px">소근소근</a>
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:350px">소근소근</a>
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:150px">소근소근</a>
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:890px">소근소근</a>
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:700px">소근소근</a>
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:320px">소근소근</a>
-<a class="navbar-brand" href="{%url 'main'%}" style="font-family: 'Gaegu', cursive; font-size:3em; color:white; position:relative; left:180px">소근소근</a>
-
-
-
-
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:800px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:200px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:400px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:900px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:1000px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:100px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:700px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:300px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:500px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:400px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:800px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:600px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:900px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:100px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:400px">소근소근</a></span><br>
+<span class="image blinking"><a  id="w_button"
+style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';position:relative;left:1000px">소근소근</a></span><br>
 
 
 
@@ -34,6 +52,41 @@
             background-image:url("{% static '검은 일러스트.jpg'%}");
             background-repeat: no-repeat;
             background-size: cover;
+        }
+        .blinking {
+            -webkit-animation: blink 1.5s ease-in-out infinite alternate;
+            -moz-animation: blink 1.5s ease-in-out infinite alternate;
+            animation: blink 1.5s ease-in-out infinite alternate;
+        }
+    
+        @-webkit-keyframes blink {
+            0% {
+                opacity: 0;
+            }
+    
+            100% {
+                opacity: 1;
+            }
+        }
+    
+        @-moz-keyframes blink {
+            0% {
+                opacity: 0;
+            }
+    
+            100% {
+                opacity: 1;
+            }
+        }
+    
+        @keyframes blink {
+            0% {
+                opacity: 0;
+            }
+    
+            100% {
+                opacity: 1;
+            }
         }
     
     </style>
