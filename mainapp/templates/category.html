@@ -58,10 +58,10 @@
                 {% if p.blind == True %}
                 {% else %}
                 <tr>
-                    <td class =link style="text-align: left;"><a href="{%url 'read' p.id%}" style="text-decoration: none; color:black;">{{p.title}}</a></td>
-                    <td>{{p.user.profile.nickname}}</td>
-                    <td>{{p.like_num}}</td>
-                    <td> {{p.updated_at|date:"m월 d일"}}</td>
+                    <td class =link style="text-align: left;"><a href="{%url 'read' p.id%}" style="text-decoration: none; color:white;"><u>{{p.title}}</u></a></td>
+                    <td style="color:white">{{p.user.profile.nickname}}</td>
+                    <td style="color:white">{{p.like_num}}</td>
+                    <td style="color:white"> {{p.updated_at|date:"m월 d일"}}</td>
                     {% endif %}
                     {% endfor %}
                 </tr>
@@ -94,10 +94,10 @@
                     {% if p.blind == True %}
                     {% else %}
                     <tr>
-                        <td style="text-align: left"><a href="{%url 'read' p.id%}">{{p.title}}</a></td>
-                        <td>{{p.user.profile.nickname}}</td>
-                        <td>{{p.like_num}}</td>
-                        <td> {{p.updated_at|date:"m월 d일"}}</td>
+                        <td style="text-align: left"><a href="{%url 'read' p.id%}"style="color:white"><u>{{p.title}}</u></a></td>
+                        <td style="color:white">{{p.user.profile.nickname}}</td>
+                        <td style="color:white">{{p.like_num}}</td>
+                        <td style="color:white"> {{p.updated_at|date:"m월 d일"}}</td>
                         {% endif %}
                         {% endfor %}
                     </tr>
