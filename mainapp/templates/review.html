@@ -65,14 +65,15 @@
 
 <body>
 
-    <div class="card">
+    <div class="card" style="background:rgba(255,255,255,0.1);color:white;border-color:azure;">
+            <h2 style="color:azure; font-weight:900;font-family: 'Noto Serif KR', serif;text-align:center;">후기</h2>
         {% if user.is_authenticated %}
         <form action="{%url 'r_write' %}" method="POST" enctype="multipart/form-data" style="height:100%;">
             {%csrf_token%}
             <div class="input-group mt-5 mb-5" style="padding:0">
                 <ul style="list-style-type:none;">
                     <li><input name="title" class="form-control" type="text" placeholder="제목"></li><br>
-                    <li><input name="content" class="form-control form-content" type="text" size="120%;"
+                    <li><input name="content" class="form-control form-content" type="text" size="105%;"
                             placeholder="소근소근 어땠나요? 서로가 더 훈훈해지는 후기 부탁드립니다."></li>
                     <hr>
                     <li>
@@ -100,10 +101,10 @@
         </form>
         {% else %}
         <div class="card-body">후기를 남기려면 <a href="{%url 'login'%}"
-                style="text-decoration:none; color:black; font-weight:bold;">로그인</a> 해주세요.</div>
+                style="text-decoration:none; color:white; font-weight:bold;"><u>로그인</u></a> 해주세요.</div>
         {% endif %}
     </div>
-    <div class="card">
+    <div class="card" style="background:rgba(255,255,255,0.1);border-color:azure;">
 
         <div class="card-body">
             <div>
@@ -167,7 +168,7 @@
 
     <!-- 아래 이후 댓글 -->
 
-    <div style="text-align: center">
+    <div style="text-align: center;">
         <form action="{%url 'main' %}">
             <button type="submit" class="like_btn" style="background:black"><img src="{% static 'home.jpg'%}" width="40"
                     height="40"></button>
