@@ -2,22 +2,23 @@
 {% block contents %}
 {% load staticfiles %}
 
-<div class='back mb-5' align="center"> 
-        <br><br><br><br>
+<div class='back mb-5' align="center">
+    <br><br><br><br>
     <div style="font-family: 'Noto Serif KR', serif; font-size:3em; color:azure;padding-top:3em;">우리들을 위한 말하기 공간</div>
     <div style="font-family: 'Gaegu', cursive; font-size:9em; color:azure;">소근소근</div>
     {% if user.is_authenticated %}
-    <button type="button" class="btn btn-dark" style="float: center; color:rgb(41, 41, 64);"><a href="{% url 'write' %}" id="w_button" style="color:azure;">글쓰기
+    <button type="button" class="btn btn-dark" style="float: center; color:rgb(41, 41, 64);"><a href="{% url 'write' %}"
+            id="w_button" style="color:azure;">글쓰기
             버튼</a></button>
-        {% else %}
+    {% else %}
     {%endif%}
 </div>
 
-{%for p in posts%}
+<!-- {%for p in posts%}
 {% if p.blind == True %}
 {% else %}
 <div class="card mb-3 shadow" style="width: 100%;">
-    <div class="card-body"> 
+    <div class="card-body">
         카테고리 : {{p.category}}<br>
         제목 : {{p.title}}<br>
         <span style="font-size:0.8em;">{{p.user}} {{p.updated_at|date:"Y년m월d일"}} </span>
@@ -29,61 +30,61 @@
 <br>
 <table class="greyGridTable">
     <div class="container">
-    <thead>
-    <tr class="row">
-    <th class="col-3">진로</th>
-    <th class="col-3">취업</th>
-    <th class="col-3">연애</th>
-    <th class="col-3">친구</th>
-    </tr>
-    </thead>
-    
-    <tbody>
-    <tr class="row">
-        <td class="col-3">
-            {%for p in post1%}
-            <span class="date">{{p.updated_at|date:"Y년m월d일"}}</span>
-            <a href="{%url 'read' p.id%}" class="name">{{p.title|truncatechars:9}}</a>
-            <br>
-            {%endfor%}
-        </td>
-        <td class="col-3">
-            {%for p in post2%}
-            <span class="date">{{p.updated_at|date:"Y년m월d일"}}</span>
-            <a href="{%url 'read' p.id%}" class="name">{{p.title|truncatechars:9}}</a>
-            <br>
-            {%endfor%}
-        </td>
-        <td class="col-3">
-            {%for p in post3%}
-            <span class="date">{{p.updated_at|date:"Y년m월d일"}}</span>
-            <a href="{%url 'read' p.id%}" class="name">{{p.title|truncatechars:9}}</a>
-            <br>
-            {%endfor%}
-        </td>
-        <td class="col-3">
-            {%for p in post4%}
-            <span class="date">{{p.updated_at|date:"Y년m월d일"}}</span>
-            <a href="{%url 'read' p.id%}" class="name">{{p.title|truncatechars:9}}</a>
-            <br>
-            {%endfor%}
-        </td>
-    </tr>
-    </tbody>
-</div>
-    </table>
-    <table class="greyGridTable">
-            <div class="container">
-            <thead>
+        <thead>
             <tr class="row">
-            <th class="col-3">외모</th>
-            <th class="col-3">19</th>
-            <th class="col-3">기타</th>
-            <th class="col-3">뀨</th>
+                <th class="col-3">진로</th>
+                <th class="col-3">취업</th>
+                <th class="col-3">연애</th>
+                <th class="col-3">친구</th>
             </tr>
-            </thead>
-            
-            <tbody>
+        </thead>
+
+        <tbody>
+            <tr class="row">
+                <td class="col-3">
+                    {%for p in post1%}
+                    <span class="date">{{p.updated_at|date:"Y년m월d일"}}</span>
+                    <a href="{%url 'read' p.id%}" class="name">{{p.title|truncatechars:9}}</a>
+                    <br>
+                    {%endfor%}
+                </td>
+                <td class="col-3">
+                    {%for p in post2%}
+                    <span class="date">{{p.updated_at|date:"Y년m월d일"}}</span>
+                    <a href="{%url 'read' p.id%}" class="name">{{p.title|truncatechars:9}}</a>
+                    <br>
+                    {%endfor%}
+                </td>
+                <td class="col-3">
+                    {%for p in post3%}
+                    <span class="date">{{p.updated_at|date:"Y년m월d일"}}</span>
+                    <a href="{%url 'read' p.id%}" class="name">{{p.title|truncatechars:9}}</a>
+                    <br>
+                    {%endfor%}
+                </td>
+                <td class="col-3">
+                    {%for p in post4%}
+                    <span class="date">{{p.updated_at|date:"Y년m월d일"}}</span>
+                    <a href="{%url 'read' p.id%}" class="name">{{p.title|truncatechars:9}}</a>
+                    <br>
+                    {%endfor%}
+                </td>
+            </tr>
+        </tbody>
+    </div>
+</table>
+<table class="greyGridTable">
+    <div class="container">
+        <thead>
+            <tr class="row">
+                <th class="col-3">외모</th>
+                <th class="col-3">19</th>
+                <th class="col-3">기타</th>
+                <th class="col-3">뀨</th>
+            </tr>
+        </thead>
+
+        <tbody>
             <tr class="row">
                 <td class="col-3">
                     {%for p in post5%}
@@ -107,23 +108,43 @@
                     {%endfor%}
                 </td>
                 <td class="col-3">
-                    <img src="{% static 'logo.jpg'%}" width="100px" height="100px" style="position:relative; left:110px"> 
+                    <img src="{% static 'logo.jpg'%}" width="100px" height="100px"
+                        style="position:relative; left:110px">
                 </td>
             </tr>
-            </tbody>
+        </tbody>
+    </div>
+</table>
+
+
+<div class="container">
+    <div class="row justify-content-around mb-5" >
+        <div class="card col-5">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
         </div>
-            </table>
-
-
-
-
-
-
-
+        <div class="card col-5 ">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div> -->
 
 
 <style>
-    body{background-color:black;}
+    body {
+        background-color: black;
+    }
+
     .back {
         height: 90vh;
         background-image:url("{% static '검은 일러스트.jpg'%}");
@@ -132,31 +153,35 @@
     }
 
     .name {
-        color:white;
+        color: white;
     }
 
     table.greyGridTable {
-        margin:10px;
+        margin: 10px;
         border: 2px solid rgb(255, 255, 255);
         width: 98%;
         border-collapse: collapse;
-        color:white;
+        color: white;
     }
-    table.greyGridTable td, table.greyGridTable th {
+
+    table.greyGridTable td,
+    table.greyGridTable th {
         border: rgb(255, 255, 255);
-        
+
     }
+
     table.greyGridTable tbody td {
         font-size: 13px;
-        
+
     }
-    table.greyGridTable td:nth-child(even) {
-        
-    }
+
+    table.greyGridTable td:nth-child(even) {}
+
     table.greyGridTable thead {
-    
+
         border-bottom: 4px solid #ffffff;
     }
+
     table.greyGridTable thead th {
         font-size: 15px;
         font-weight: bold;
@@ -164,20 +189,21 @@
         text-align: center;
         border-left: 2px solid #333333;
     }
+
     table.greyGridTable thead th:first-child {
         border-left: none;
     }
-    
+
     table.greyGridTable tfoot {
         font-size: 14px;
         font-weight: bold;
         color: #333333;
         border-top: 4px solid #ffffff;
     }
+
     table.greyGridTable tfoot td {
         font-size: 14px;
     }
-
 </style>
 
 {% endblock %}

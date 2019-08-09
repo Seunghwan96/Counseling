@@ -6,10 +6,10 @@
     <title>소근소근 {{name}}만 모아봤어</title>
     <style>
         body {
-            background-image:url("{% static 'bg.jpg'%}");
-            background-size: 300px;
-            font-family: 'Noto Serif KR', serif;
-            font-size: 1.1em;
+            height: 90vh;
+            background-image:url("{% static '검은 일러스트.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         .card {
@@ -65,7 +65,10 @@
 
     <div class=card>
             <br>
+            <div class="row">
             <h2 style="color:black">오늘의 새글</h2>
+            <button type="button" class="btn btn-dark"><a href="{% url 'write' %}" id="w_button">글쓰기 버튼</a></button>
+        </div>
             <table>
                 <tbody>
                     <tr>
@@ -95,7 +98,7 @@
             </table>
             <br>
         </div>
-    <button type="button" class="btn btn-dark"><a href="{% url 'write' %}" id="w_button">글쓰기 버튼</a></button>
+ 
 </body>
 
 {% endblock %}
