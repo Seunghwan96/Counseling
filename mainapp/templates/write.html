@@ -5,7 +5,6 @@
 <!-- style="opacity:1;" onmouseover="this.style.opacity='0.2'" -->
 <br><br><br>
 <div class="container shadow a" style="background:rgba(255,255,255,0.1);">
-<<<<<<< HEAD
     <br>
     <h2 style="text-align:center; color:azure; font-family: 'Noto Serif KR', serif;font-size:40px;font-weight:800 ">나
         이야기</h2>
@@ -51,39 +50,6 @@
                     <div class="filebox">
                         <label for="ex_file">업로드</label>
                         <input type="file" id="ex_file" name="image">
-=======
-        <br>
-        <h2 style="text-align:center; color:azure; font-family: 'Noto Serif KR', serif;font-size:40px;font-weight:800 ">나 이야기</h2>
-        <br>
-        <hr class="hr-one" align="center">
-        <br>
-        <form action="{% url 'write' %}" method="POST" enctype="multipart/form-data">
-            <!--GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함-->
-            {%csrf_token%}
-            <div class="form-group">
-                <div class="form-group col-md-4">
-                    <label for="inputState" style="color:azure; font-family: 'Noto Serif KR', serif;font-weight:700">카테고리</label>
-                    <select name="category" id="inputState" class="form-control" style= "background:rgba(255,255,255,0.1); color:white;">
-                        <option value="진로"style="color:white;" >진로</option>
-                        <option value="취업">취업</option>
-                        <option value="연애">연애</option>
-                        <option value="친구">친구</option>
-                        <option value="외모">외모</option>
-                        <option value="19">19</option>
-                        <option value="기타">기타</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <div class="form-group col-md-6">
-                        <label for="inputCity" style="color:azure; font-family: 'Noto Serif KR', serif;font-weight:700">제목</label>
-                        <input type="text" class="form-control" id="inputCity" name="title" class="form-control" style= "background:rgba(255,255,255,0.1); color:white;">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-group col-md-6">
-                        <label for="inputCity"style="color:azure; font-family: 'Noto Serif KR', serif;font-weight:700">이야기</label>
-                        <input type="content" id="inputCity" class="form-control" style="width:1075px; color:white; height:400px; background:rgba(255,255,255,0.1); font-family: 'Noto Serif KR', serif;">
->>>>>>> 0cded093630d88ea127d6083ff7b9b7b71d98cda
                     </div>
                 </div>
             </div>
