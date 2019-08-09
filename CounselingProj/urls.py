@@ -37,6 +37,7 @@ urlpatterns = [
     path('c_profile/<int:comment_id>/<str:user>', mainapp.views.c_profile, name='c_profile'), #댓글에서 프로필화면 가기 
     path('c_create/<int:post_id>',mainapp.views.c_create, name="c_create"), #댓글 쓰기
     path('c_delete/<int:comment_id>',mainapp.views.c_delete, name='c_delete'), #댓글 삭제
+    path('introduce/',mainapp.views.introduce, name='introduce'),
 
     path('setPLike/<int:post_id>',mainapp.views.setPLike, name='setPLike'), # 게시글 공감
     path('setPdisLike/<int:post_id>',mainapp.views.setPdisLike, name='setPdisLike'), # 게시글 비공감
@@ -51,4 +52,5 @@ urlpatterns = [
     path('r_write/', mainapp.views.r_write, name='r_write'), #후기작성
     path('r_update/<int:review_id>',mainapp.views.r_update, name='r_update'), #후기수정
     path('r_delete/<int:review_id>', mainapp.views.r_delete, name='r_delete'), #후기삭제
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
