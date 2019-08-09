@@ -307,3 +307,12 @@ def setCdisLike(request, comment_id, post_id):
         profile.save()
         comment.save()
     return redirect(read, post.id)
+
+
+
+def introduce(request):
+
+
+
+
+    return render(request,'introduce.html')

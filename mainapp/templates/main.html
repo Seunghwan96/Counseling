@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 <div class='back mb-5' align="center"> 
-        <br><br><br><br>
+
     <div style="font-family: 'Noto Serif KR', serif; font-size:3em; color:azure;padding-top:3em;">우리들을 위한 말하기 공간</div>
     <div style="font-family: 'Gaegu', cursive; font-size:9em; color:azure;">소근소근</div>
     {% if user.is_authenticated %}
@@ -12,7 +12,7 @@
         {% else %}
     {%endif%}
 </div>
-
+<!-- 
 {%for p in posts%}
 {% if p.blind == True %}
 {% else %}
@@ -26,8 +26,8 @@
 </div>
 {% endif %}
 {% endfor %}
-<br>
-<table class="greyGridTable">
+<br> -->
+<!-- <table class="greyGridTable">
     <div class="container">
     <thead>
     <tr class="row">
@@ -113,29 +113,22 @@
             </tbody>
         </div>
             </table>
+ -->
 
 
 
 
+ <style>
 
-
-
-
-
-<style>
-    body{background-color:black;}
-    .back {
-        height: 90vh;
-        background-image:url("{% static '검은 일러스트.jpg'%}");
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-
-    .name {
-        color:white;
-    }
-
-    table.greyGridTable {
+        body {
+            height: 95vh;
+            background-image:url("{% static '검은 일러스트.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    
+    </style>
+    <!-- table.greyGridTable {
         margin:10px;
         border: 2px solid rgb(255, 255, 255);
         width: 98%;
@@ -176,8 +169,8 @@
     }
     table.greyGridTable tfoot td {
         font-size: 14px;
-    }
+    } -->
 
-</style>
+
 
 {% endblock %}
