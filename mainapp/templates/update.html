@@ -1,28 +1,123 @@
 {%extends 'base.html' %}
 {%block contents%}
-<h1>글수정 페이지</h1><!--GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함-->
+{% load staticfiles %}
+<title>나의 이야기 수정하기</title>
+<!-- style="opacity:1;" onmouseover="this.style.opacity='0.2'" -->
+<br><br><br>
+<div class="container shadow a" style="background:rgba(255,255,255,0.1);">
+    <br>
+    <h2 style="text-align:center; color:azure; font-family: 'Noto Serif KR', serif;font-size:40px;font-weight:800 ">나
+        이야기 수정하기</h2>
+    <br>
+    <hr class="hr-one" align="center">
+    <br>
+    <form action="{% url 'update' post.id%}" method="POST" enctype="multipart/form-data">
+        <!--GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함-->
+        {%csrf_token%}
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                <label for="inputState"
+                    style="color:azure; font-family: 'Noto Serif KR', serif;font-weight:700">카테고리</label>
+                <select name="category" id="inputState" class="form-control"
+                    style="background:rgba(255,255,255,0.1); color:white;">
+                    <option value="진로" style="color:white;">진로</option>
+                    <option value="취업">취업</option>
+                    <option value="연애">연애</option>
+                    <option value="친구">친구</option>
+                    <option value="외모">외모</option>
+                    <option value="19">19</option>
+                    <option value="기타">기타</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="form-group col-md-6">
+                    <label for="inputCity"
+                        style="color:azure; font-family: 'Noto Serif KR', serif;font-weight:700">제목</label>
+                    <input type="text" class="form-control" id="inputCity" name="title" class="form-control"
+                        style="background:rgba(255,255,255,0.1); color:white;" value="{{post.title}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group col-md-6">
+                    <label for="inputCity"
+                        style="color:azure; font-family: 'Noto Serif KR', serif;font-weight:700">이야기</label>
+                    <input name="content" type="content" id="inputCity" value="{{post.content}}" class="form-control"
+                        style="width:1075px; color:white; height:400px; background:rgba(255,255,255,0.1); font-family: 'Noto Serif KR', serif;">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group col-md-6">
+                    <div class="filebox">
+                        <label for="ex_file">업로드</label>
+                        <input type="file" id="ex_file" name="image" value="{{post.image}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-dark">글쓰기</button>
+                </div>
+            </div>
+            <br>
+        </div>
+    </form>
 
-<form action="{% url 'update' post.id%}" method="POST" enctype="multipart/form-data">
-    <!--GET 은 검색을 위함, POST는 데이터를 전송하고 전송된 데이터에 대한 결과값을 돌려받기 위함-->
-    {%csrf_token%}
-    <select name="category" id="">
-        <option value="진로">진로</option>
-        <option value="취업">취업</option>
-        <option value="연애">연애</option>
-        <option value="친구">친구</option>
-        <option value="외모">외모</option>
-        <option value="19">19</option>
-        <option value="기타">기타</option>
-    </select>
-    <p>제목</p>
-    <input type="text" name="title" value="{{post.title}}">
-    <p>내용</p>
-    <textarea name="content" id="" cols="30" rows="10" value="{{post.content}}">{{post.content}}</textarea>
-    <br>
-    <input type="file" name="image" value="{{post.image}}">
-    <br>
-    <input type="submit" value="수정하기">
-    <br>
-</form>
-<a href="{% url 'main'%}">Home</a>
+</div>
+
+<style>
+    body {
+        height: 90vh;
+
+        background-image:url("{% static '검은 일러스트.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .hr-one {
+        width: 100%;
+    }
+
+    .filebox label {
+        display: inline-block;
+        padding: .5em .75em;
+        color: #fff;
+        font-size: inherit;
+        line-height: normal;
+        vertical-align: middle;
+        background-color: #51505d;
+        cursor: pointer;
+        border: 1px solid #a8a3e4;
+        border-radius: .25em;
+        -webkit-transition: background-color 0.2s;
+        transition: background-color 0.2s;
+    }
+
+    .filebox label:hover {
+        background-color: #a8a3e4;
+    }
+
+    .filebox label:active {
+        background-color: #768076;
+    }
+
+    .filebox input[type="file"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+
+    .a {
+        border: 2px solid #bcbcbc;
+    }
+
+    .col-md-6 {
+        color: white;
+    }
+</style>
 {%endblock%}
+
