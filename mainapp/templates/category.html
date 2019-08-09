@@ -17,48 +17,57 @@
             margin-bottom: 5%;
             margin-left: 10%;
             margin-right: 10%;
-            padding-left:3%;
+            padding-left: 3%;
             padding-right: 3%;
         }
-        th{
+
+        th {
             text-align: center;
-            color:azure;
-            font-family: 'Noto Serif KR', serif;"
+            color: azure;
+            font-family: 'Noto Serif KR', serif;
+            "
+
         }
-        td{
+
+        td {
             text-align: center;
         }
 
-        .b{
+        .b {
             border: 2px solid #bcbcbc;
-        
+
         }
     </style>
 </head>
 
 <body>
-    <div class="card b" style="background:rgba(252, 250, 250, 0.1);" >
+    <div class="card b" style="background:rgba(252, 250, 250, 0.1);">
         <br>
-        <h2 style="color:azure; font-weight:900;font-family: 'Noto Serif KR', serif;" >공감 베스트</h2>
+        <h2 style="color:azure; font-weight:900;font-family: 'Noto Serif KR', serif;">공감 베스트</h2>
         <table>
             <tbody>
                 <tr>
-                    <th colspan="4"><hr style="border-color:azure;"></th>
+                    <th colspan="4">
+                        <hr style="border-color:azure;">
+                    </th>
                 </tr>
                 <tr>
-                    <th width="30%" style=" color:azure; font-family: 'Noto Serif KR', serif;" >제목</th>
+                    <th width="30%" style=" color:azure; font-family: 'Noto Serif KR', serif;">제목</th>
                     <th width="10%" style=" color:azure; f  ont-family: 'Noto Serif KR', serif;">작성자</th>
                     <th width="5%" style=" color:azure; font-family: 'Noto Serif KR', serif;">공감수</th>
-                    <th width="15%"style=" color:azure; font-family: 'Noto Serif KR', serif;">작성일</th>
+                    <th width="15%" style=" color:azure; font-family: 'Noto Serif KR', serif;">작성일</th>
                 </tr>
                 <tr>
-                    <th colspan="4"><hr style="border-color:azure;"></th>
+                    <th colspan="4">
+                        <hr style="border-color:azure;">
+                    </th>
                 </tr>
                 {%for p in best%}
                 {% if p.blind == True %}
                 {% else %}
                 <tr>
-                    <td class =link style="text-align: left;"><a href="{%url 'read' p.id%}" style="text-decoration: none; color:white;"><u>{{p.title}}</u></a></td>
+                    <td class=link style="text-align: left;"><a href="{%url 'read' p.id%}"
+                            style="text-decoration: none; color:white;"><u>{{p.title}}</u></a></td>
                     <td style="color:white">{{p.user.profile.nickname}}</td>
                     <td style="color:white">{{p.like_num}}</td>
                     <td style="color:white"> {{p.updated_at|date:"m월 d일"}}</td>
@@ -71,41 +80,53 @@
     </div>
 
     <div class="card b" style="background:rgba(252, 250, 250, 0.1);">
-            <br>
-            <div class="row">
-            <h2 style="color:azure;font-weight:900;font-family: 'Noto Serif KR', serif;">오늘의 새글</h2>
-            <button type="button" class="btn btn-secondary" style="position:relative; left:1100px;"><a href="{% url 'write' %}" id="w_button" style="color:black" >글쓰기 버튼</a></button>
+        <br>
+        <div class="row">
+            <span class="col">
+                <h2 style="color:azure;font-weight:900;font-family: 'Noto Serif KR', serif;">오늘의 새글</h2>
+            </span>
+            <span clas="col">
+                <span class="image blinking" style="text-align: right;">
+                    <a href="{% url 'write' %}" id="w_button"
+                        style="text-decoration:none;  font-size:2em;color:antiquewhite; font-family:'Gaegu';">속삭이기</a>
+                </span>
+            </span>
         </div>
-            <table>
-                <tbody>
-                    <tr>
-                        <th colspan="4"><hr style="border-color:azure;"></th>
-                    </tr>
-                    <tr>
-                        <th width="30%" >제목</th>
-                        <th width="10%">작성자</th>
-                        <th width="5%">공감수</th>
-                        <th width="15%">작성일</th>
-                    </tr>
-                    <tr>
-                        <th colspan="4"><hr style="border-color:azure;"></th>
-                    </tr>
-                    {%for p in latest%}
-                    {% if p.blind == True %}
-                    {% else %}
-                    <tr>
-                        <td style="text-align: left"><a href="{%url 'read' p.id%}"style="color:white"><u>{{p.title}}</u></a></td>
-                        <td style="color:white">{{p.user.profile.nickname}}</td>
-                        <td style="color:white">{{p.like_num}}</td>
-                        <td style="color:white"> {{p.updated_at|date:"m월 d일"}}</td>
-                        {% endif %}
-                        {% endfor %}
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-        </div>
- 
+        <table>
+            <tbody>
+                <tr>
+                    <th colspan="4">
+                        <hr style="border-color:azure;">
+                    </th>
+                </tr>
+                <tr>
+                    <th width="30%">제목</th>
+                    <th width="10%">작성자</th>
+                    <th width="5%">공감수</th>
+                    <th width="15%">작성일</th>
+                </tr>
+                <tr>
+                    <th colspan="4">
+                        <hr style="border-color:azure;">
+                    </th>
+                </tr>
+                {%for p in latest%}
+                {% if p.blind == True %}
+                {% else %}
+                <tr>
+                    <td style="text-align: left"><a href="{%url 'read' p.id%}"
+                            style="color:white"><u>{{p.title}}</u></a></td>
+                    <td style="color:white">{{p.user.profile.nickname}}</td>
+                    <td style="color:white">{{p.like_num}}</td>
+                    <td style="color:white"> {{p.updated_at|date:"m월 d일"}}</td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+
 </body>
 
 {% endblock %}
