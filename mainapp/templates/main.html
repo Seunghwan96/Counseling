@@ -1,28 +1,64 @@
 {% extends 'base.html' %}
 {% block contents %}
 {% load staticfiles %}
-<title>소근소근</title>
-<div class='back mb-5' align="center"> 
+
+
+<div class='back mb-5' align="center">
 
     <div style="font-family: 'Noto Serif KR', serif; font-size:3em; color:azure;padding-top:3em;">우리들을 위한 말하기 공간</div>
     <div style="font-family: 'Gaegu', cursive; font-size:9em; color:azure;">소근소근</div>
     {% if user.is_authenticated %}
-    <button type="button" class="btn btn-dark" style="float: center; color:rgb(41, 41, 64);"><a href="{% url 'write' %}" id="w_button" style="color:azure;">글쓰기
-            버튼</a></button>
-        {% else %}
+    <span class="image blinking">
+        <a href="{% url 'write' %}" id="w_button"
+            style="text-decoration:none; font-size:0.7cm;color:antiquewhite; font-family:'Gaegu';">속삭이기</a></span>
+    {% else %}
     {%endif%}
 </div>
 
 <style>
+    body {
+        height: 95vh;
+        background-image:url("{% static '검은 일러스트.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
-        body {
-            height: 95vh;
-            background-image:url("{% static '검은 일러스트.jpg'%}");
-            background-repeat: no-repeat;
-            background-size: cover;
+    .blinking {
+        -webkit-animation: blink 1.5s ease-in-out infinite alternate;
+        -moz-animation: blink 1.5s ease-in-out infinite alternate;
+        animation: blink 1.5s ease-in-out infinite alternate;
+    }
+
+    @-webkit-keyframes blink {
+        0% {
+            opacity: 0;
         }
-    
-    </style>
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-moz-keyframes blink {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes blink {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+</style>
 
 
 
