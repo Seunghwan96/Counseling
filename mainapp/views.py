@@ -4,13 +4,25 @@ from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from itertools import chain
 # Create your views here.
- 
+
     
 def main(request):
-    posts = Post.objects.all()
+    post1 = Post.objects.filter(category__icontains='진로').order_by('-like_num')[:4]
+    post2 = Post.objects.filter(category__icontains='취업').order_by('-like_num')[:4]
+    post3 = Post.objects.filter(category__icontains='연애').order_by('-like_num')[:4]
+    post4 = Post.objects.filter(category__icontains='친구').order_by('-like_num')[:4]
+    post5 = Post.objects.filter(category__icontains='외모').order_by('-like_num')[:4]
+    post6 = Post.objects.filter(category__icontains='19').order_by('-like_num')[:4]
+    post7 = Post.objects.filter(category__icontains='기타').order_by('-like_num')[:4]
     #posts = chain(posts, (Post.objects.order_by('-created_at').all()))
     context={
-        "posts":posts 
+        "post1":post1,
+        "post2":post2,
+        "post3":post3,
+        "post4":post4,
+        "post5":post5,
+        "post6":post6,
+        "post7":post7,
         }
     return render(request, 'main.html',context)
 
@@ -50,6 +62,7 @@ def write(request): #GET 은 검색을 위함, POST는 데이터를 전송하고
         post.title=request.POST['title']
         post.content=request.POST['content']
         post.category=request.POST['category']
+        category = request.POST['category']
         anonymous = request.POST.get('anonymous',False)  
         if anonymous == "1":
             post.anonymous = True
@@ -60,7 +73,7 @@ def write(request): #GET 은 검색을 위함, POST는 데이터를 전송하고
             
         post.save()
 
-        return redirect('main')
+        return redirect('category', category)   
 
 def review(request):
     reviews = Review.objects.all()
@@ -190,7 +203,7 @@ def category(request, category):
     posts = Post.objects.all()
     name = str(category)
     latest = posts.filter(category__icontains=category).order_by('-created_at')
-    best = posts.filter(category__icontains=category).order_by('-like_num')
+    best = posts.filter(category__icontains=category).order_by('-like_num')[:3]
     context={
         "best":best,
         "name":name,

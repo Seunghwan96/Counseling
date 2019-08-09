@@ -1,24 +1,12 @@
 {%extends 'base.html' %}
 {%block contents%}
-{%load staticfiles %}
+{% load staticfiles %}
 
-<head>
-    <style>
-        body {
-            background-image:url("{% static 'bg.jpg'%}");
-            background-size: 300px;
-        }
-
-        .hr-one {
-            width: 100%;
-        }
-    </style>
-    <title>소근소근 글쓰기</title>
-</head>
-<div class="container">
-    <div class="card mt-5 mb-3 shadow" style="width:100%">
-        <br><br>
-        <h1 style="text-align:center;">글쓰기 페이지</h1>
+<!-- style="opacity:1;" onmouseover="this.style.opacity='0.2'" -->
+<br><br><br>
+<div class="container shadow a" style="background:rgba(255,255,255,0.1);">
+        <br>
+        <h2 style="text-align:center; color:azure;">글쓰기 페이지</h2>
         <br>
         <hr class="hr-one" align="center">
         <br>
@@ -27,8 +15,8 @@
             {%csrf_token%}
             <div class="form-group">
                 <div class="form-group col-md-4">
-                    <label for="inputState">카테고리</label>
-                    <select name="category" id="">
+                    <label for="inputState" style="color:azure;">카테고리</label>
+                    <select name="category" id="inputState" class="form-control">
                         <option value="진로">진로</option>
                         <option value="취업">취업</option>
                         <option value="연애">연애</option>
@@ -40,36 +28,91 @@
                 </div>
                 <div class="form-group">
                     <div class="form-group col-md-6">
-                        <label for="inputCity">제목</label>
+                        <label for="inputCity" style="color:azure;">제목</label>
                         <input type="text" class="form-control" id="inputCity" name="title">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-group col-md-6">
-                        <label for="inputCity">내용</label>
-                        <input name="content" type="content" id="inputCity" class="form-control"
-                            style="width:800px; height:400px;">
+                        <label for="inputCity"style="color:azure;">내용</label>
+                        <input type="content" id="inputCity" class="form-control" style="width:800px; height:400px;">
                     </div>
                 </div>
+
                 <!-- <input type="file" name="image" img src="로고 작게.jpg"> -->
                 <div class="form-group">
                     <div class="form-group col-md-6">
-                        <label class="btn btn-dark">
+                        <!-- <label class="btn btn-dark">
                             파일추가 <input type="file" name="image">
-                        </label>
+                        </label> -->
+                        <div class="filebox">
+                                <label for="ex_file">업로드</label>
+                                <input type="file" id="ex_file">
+                              </div>
                         <!-- style="display: none;" -->
 
                     </div>
                 </div>
+
                 <div class="form-group">
                     <div class="form-group col-md-6">
-                        <button type="submit" class="btn btn-dark">글쓰기</button>
+                        <button type="button" class="btn btn-dark">글쓰기</button>
+
                     </div>
                 </div>
-            </div>
+                <br>
         </form>
-    </div>
+
 </div>
 
-<a href="{% url 'main' %}">Home</a>
+<style>
+        body {
+            height: 90vh;
+            background-image:url("{% static '검은 일러스트.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    
+        .hr-one {
+            width: 100%;
+        }
+
+        .filebox label {
+            display: inline-block;
+            padding: .5em .75em;
+            color: #fff;
+            font-size: inherit;
+            line-height: normal;
+            vertical-align: middle;
+            background-color: #51505d;
+            cursor: pointer;
+            border: 1px solid #a8a3e4;
+            border-radius: .25em;
+            -webkit-transition: background-color 0.2s;
+            transition: background-color 0.2s;
+          }
+          
+          .filebox label:hover {
+            background-color: #a8a3e4;
+          }
+          
+          .filebox label:active {
+            background-color: #768076;
+          }
+          
+          .filebox input[type="file"] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+          }
+
+          .a{
+            border: 2px solid #bcbcbc;
+          }
+    </style>
 {%endblock%}
