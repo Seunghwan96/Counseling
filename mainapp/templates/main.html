@@ -1,4 +1,4 @@
-{% extends 'base.html' %}=
+{% extends 'base.html' %}
 {% block contents %}
 {% load staticfiles %}
 
@@ -7,15 +7,13 @@
     <div style="font-family: 'Noto Serif KR', serif; font-size:3em; color:azure;padding-top:3em;">우리들을 위한 말하기 공간</div>
     <div style="font-family: 'Gaegu', cursive; font-size:9em; color:azure;">소근소근</div>
     {% if user.is_authenticated %}
-    <button type="button" class="btn btn-dark" style="float: center; color:rgb(41, 41, 64);"><a href="{% url 'write' %}"
-            id="w_button" style="color:azure;">글쓰기
+    <button type="button" class="btn btn-dark" style="float: center; color:rgb(41, 41, 64);"><a href="{% url 'write' %}" id="w_button" style="color:azure;">글쓰기
             버튼</a></button>
-    {% else %}
+        {% else %}
     {%endif%}
 </div>
 
-
- <style>
+<style>
 
         body {
             height: 95vh;
@@ -25,7 +23,7 @@
         }
     
     </style>
-  
+
 
 
 {% endblock %}
